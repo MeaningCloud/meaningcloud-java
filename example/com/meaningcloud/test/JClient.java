@@ -5,8 +5,6 @@ import com.meaningcloud.*;
 import java.io.IOException;
 import java.util.List;
 
-import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
-
 public class JClient {
     private static String MEANINGCLOUD_KEY;
 
@@ -71,7 +69,7 @@ public class JClient {
         String lang = exampleLangRequest(txt);
 
         if (lang.matches("auto")  || lang.matches("en") || lang.matches("es") || lang.matches("fr") || lang.matches("it") || lang.matches("pt") || lang.matches("ca")){
-            Request.Language language = Request.Language.valueOf(toUpperCase(lang));
+            Request.Language language = Request.Language.valueOf(lang.toUpperCase());
 
             exampleTopicsRequest(txt, language);
             exampleParserRequest(txt, language);
