@@ -14,7 +14,8 @@ import java.util.*;
 
 public class ClassRequest extends Request{
 
-    public static final String ENDPOINT = SERVER.concat("class-1.1");
+    public static final Endpoint.Service DEFAULT_SERVICE = Endpoint.Service.CLASS;
+    public static final Endpoint DEFAULT_ENDPOINT = new Endpoint(DEFAULT_SERVICE);
     public static final boolean DEFAULT_VERBOSE = false;
     public static final String DEFAULT_CATEGORIES_FILTER = "";
     public static final Payload DEFAULT_PAYLOAD = new NoPayload();
@@ -135,11 +136,11 @@ public class ClassRequest extends Request{
     public final Payload payload;
 
     /**
-     * Add parameters to the request
-     * @return A class response object
-     * @throws IOException Raised when a parameter value can't be accepted
+     * Sends the request to a specific endpoint
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
      */
-    public ClassResponse send() throws IOException {
+    public ClassResponse send(Endpoint endpoint) throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("key", key);
         params.put("src", "mc-java");
@@ -151,8 +152,26 @@ public class ClassRequest extends Request{
             params.put(x.getKey(), x.getValue());
         }
 
-        String response = post(ENDPOINT, params);
+        String response = post(endpoint, params);
         return ClassResponse.from(response);
+    }
+
+    /**
+     * Sends the request to the default endpoint <tt>api.meaningcloud.com</tt>
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
+     */
+    public ClassResponse send() throws IOException {
+        return send(DEFAULT_ENDPOINT);
+    }
+
+    /**
+     * Sends the request to a specific server
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
+     */
+    public ClassResponse send(Endpoint.Server server) throws IOException {
+        return send(server.with(DEFAULT_SERVICE));
     }
 
     /**

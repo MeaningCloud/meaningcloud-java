@@ -14,7 +14,8 @@ import java.util.Map;
  */
 public class ParserRequest extends Request {
 
-    public static final String ENDPOINT = SERVER.concat("parser-2.0");
+    public static final Endpoint.Service DEFAULT_SERVICE = Endpoint.Service.PARSER;
+    public static final Endpoint DEFAULT_ENDPOINT = new Endpoint(DEFAULT_SERVICE);
     public static final ILanguage DEFAULT_ILANG = ILanguage.EN;
     public static final TopicType DEFAULT_TOPICS_TO_DETECT = TopicType.ALL;
     public static final boolean DEFAULT_VERBOSE = false;
@@ -155,11 +156,11 @@ public class ParserRequest extends Request {
     public final Payload payload;
 
     /**
-     * Add parameters to the request
-     * @return A parser response object
-     * @throws IOException Raised when a parameter value can't be accepted
+     * Sends the request to a specific endpoint
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
      */
-    public ParserResponse send() throws IOException {
+    public ParserResponse send(Endpoint endpoint) throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("key", key);
         params.put("src", "mc-java");
@@ -181,8 +182,26 @@ public class ParserRequest extends Request {
             params.put(x.getKey(), x.getValue());
         }
 
-        String response = post(ENDPOINT, params);
+        String response = post(endpoint, params);
         return ParserResponse.from(response);
+    }
+
+    /**
+     * Sends the request to the default endpoint <tt>api.meaningcloud.com</tt>
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
+     */
+    public ParserResponse send() throws IOException {
+        return send(DEFAULT_ENDPOINT);
+    }
+
+    /**
+     * Sends the request to a specific server
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
+     */
+    public ParserResponse send(Endpoint.Server server) throws IOException {
+        return send(server.with(DEFAULT_SERVICE));
     }
 
     /**

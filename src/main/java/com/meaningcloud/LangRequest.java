@@ -12,7 +12,9 @@ import java.util.*;
  * You can find more information at https://www.meaningcloud.com/developer/language-identification/doc/2.0/request
  */
 public class LangRequest extends Request{
-    public static final String ENDPOINT = SERVER.concat("lang-2.0");
+
+    public static final Endpoint.Service DEFAULT_SERVICE = Endpoint.Service.LANG;
+    public static final Endpoint DEFAULT_ENDPOINT = new Endpoint(DEFAULT_SERVICE);
     public static final String DEFAULT_SELECTION = " ";
     public static final boolean DEFAULT_VERBOSE = false;
     public static final int DEFAULT_RELEVANCE = 0;
@@ -129,11 +131,11 @@ public class LangRequest extends Request{
     public final Payload payload;
 
     /**
-     * Add parameters to the request
-     * @return A lang response object
-     * @throws IOException Raised when a parameter value can't be accepted
+     * Sends the request to a specific endpoint
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
      */
-    public LangResponse send() throws IOException {
+    public LangResponse send(Endpoint endpoint) throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("key", key);
         params.put("src", "mc-java");
@@ -144,10 +146,27 @@ public class LangRequest extends Request{
             params.put(x.getKey(), x.getValue());
         }
 
-        String response = post(ENDPOINT, params);
+        String response = post(endpoint, params);
         return LangResponse.from(response);
     }
 
+    /**
+     * Sends the request to the default endpoint <tt>api.meaningcloud.com</tt>
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
+     */
+    public LangResponse send() throws IOException {
+        return send(DEFAULT_ENDPOINT);
+    }
+
+    /**
+     * Sends the request to a specific server
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
+     */
+    public LangResponse send(Endpoint.Server server) throws IOException {
+        return send(server.with(DEFAULT_SERVICE));
+    }
     /**
      * LangRequest constructor
      * @param key User's API key

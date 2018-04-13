@@ -14,7 +14,8 @@ import java.util.Map;
  */
 public class DeepCatRequest extends Request {
 
-    public static final String ENDPOINT = SERVER.concat("deepcategorization-1.0");
+    public static final Endpoint.Service DEFAULT_SERVICE = Endpoint.Service.DEEP_CATEGORIZATION;
+    public static final Endpoint DEFAULT_ENDPOINT = new Endpoint(DEFAULT_SERVICE);
     public static final boolean DEFAULT_VERBOSE = false;
     public static final boolean DEFAULT_POLARITY = false;
     public static final Payload DEFAULT_PAYLOAD = new NoPayload();
@@ -135,11 +136,11 @@ public class DeepCatRequest extends Request {
     public final Payload payload;
 
     /**
-     * Add parameters to the request
-     * @return A DeepCategorization response object
-     * @throws IOException Raised when a parameter value can't be accepted
+     * Sends the request to a specific endpoint
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
      */
-    public DeepCatResponse send() throws IOException {
+    public DeepCatResponse send(Endpoint endpoint) throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("key", key);
         params.put("src", "mc-java");
@@ -151,8 +152,26 @@ public class DeepCatRequest extends Request {
             params.put(x.getKey(), x.getValue());
         }
 
-        String response = post(ENDPOINT, params);
+        String response = post(endpoint, params);
         return DeepCatResponse.from(response);
+    }
+
+    /**
+     * Sends the request to the default endpoint <tt>api.meaningcloud.com</tt>
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
+     */
+    public DeepCatResponse send() throws IOException {
+        return send(DEFAULT_ENDPOINT);
+    }
+
+    /**
+     * Sends the request to a specific server
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
+     */
+    public DeepCatResponse send(Endpoint.Server server) throws IOException {
+        return send(server.with(DEFAULT_SERVICE));
     }
 
     /**

@@ -212,7 +212,6 @@ public class Request {
     }
 
     protected final String key;
-    public static final String SERVER = "https://api.meaningcloud.com/";
 
     /**
      * Constructor
@@ -229,9 +228,9 @@ public class Request {
      * @return A string with API call
      * @throws IOException Raised when a parameter value can't be accepted
      */
-    protected String post(String endpoint, Map<String, String> params) throws IOException {
+    protected String post(Endpoint endpoint, Map<String, String> params) throws IOException {
         CloseableHttpClient client = HttpClientBuilder.create().build();
-        HttpPost post = new HttpPost(endpoint);
+        HttpPost post = new HttpPost(endpoint.getEndpoint());
         post.setHeader("User-Agent", "MeaningCloud Java client");
         List<NameValuePair> urlParameters = new ArrayList<>();
         for (Map.Entry<String, String> x : params.entrySet()) {

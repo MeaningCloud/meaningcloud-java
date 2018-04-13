@@ -14,7 +14,8 @@ import java.util.Map;
  */
 public class SentimentRequest extends Request {
 
-    public static final String ENDPOINT = SERVER.concat("sentiment-2.1");
+    public static final Endpoint.Service DEFAULT_SERVICE = Endpoint.Service.SENTIMENT;
+    public static final Endpoint DEFAULT_ENDPOINT = new Endpoint(DEFAULT_SERVICE);
     public static final TextFormat DEFAULT_TXT_F = TextFormat.PLAIN;
     public static final String DEFAULT_MODEL = "general_en";
     public static final boolean DEFAULT_EGP = true;
@@ -149,11 +150,11 @@ public class SentimentRequest extends Request {
     public final Payload payload;
 
     /**
-     * Add parameters to the request
-     * @return A sentiment response object
-     * @throws IOException Raised when a parameter value can't be accepted
+     * Sends the request to a specific endpoint
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
      */
-    public SentimentResponse send() throws IOException {
+    public SentimentResponse send(Endpoint endpoint) throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("key", key);
         params.put("src", "mc-java");
@@ -172,8 +173,26 @@ public class SentimentRequest extends Request {
             params.put(x.getKey(), x.getValue());
         }
 
-        String response = post(ENDPOINT, params);
+        String response = post(endpoint, params);
         return SentimentResponse.from(response);
+    }
+
+    /**
+     * Sends the request to the default endpoint <tt>api.meaningcloud.com</tt>
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
+     */
+    public SentimentResponse send() throws IOException {
+        return send(DEFAULT_ENDPOINT);
+    }
+
+    /**
+     * Sends the request to a specific server
+     * @return The server response
+     * @throws IOException Raised when the request couldn't be sent
+     */
+    public SentimentResponse send(Endpoint.Server server) throws IOException {
+        return send(server.with(DEFAULT_SERVICE));
     }
 
     /**
