@@ -42,44 +42,45 @@ signing {
     sign configurations.archives
 }
 
+if (project.hasProperty('ossrhUsername')) {
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-            pom.project {
-                name 'MeaningCloud Java SDK'
-                packaging 'jar'
-                description 'MeaningCloud official Java SDK'
-                url 'https://www.meaningcloud.com'
-
-                scm {
-                    connection 'scm:git:https://github.com/MeaningCloud/meaningcloud-java'
-                    developerConnection 'scm:git:https://github.com/MeaningCloud/meaningcloud-java'
-                    url 'https://github.com/MeaningCloud/meaningcloud-java'
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
                 }
 
-                licenses {
-                    license {
-                        name 'The MIT License'
-                        url 'https://opensource.org/licenses/MIT'
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                pom.project {
+                    name 'MeaningCloud Java SDK'
+                    packaging 'jar'
+                    description 'MeaningCloud official Java SDK'
+                    url 'https://www.meaningcloud.com'
+
+                    scm {
+                        connection 'scm:git:https://github.com/MeaningCloud/meaningcloud-java'
+                        developerConnection 'scm:git:https://github.com/MeaningCloud/meaningcloud-java'
+                        url 'https://github.com/MeaningCloud/meaningcloud-java'
                     }
-                }
 
-                developers {
-                    developer {
-                        id 'dmunoz'
-                        name 'David Muñoz'
-                        email 'dmunoz@meaningcloud.com'
+                    licenses {
+                        license {
+                            name 'The MIT License'
+                            url 'https://opensource.org/licenses/MIT'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'dmunoz'
+                            name 'David Muñoz'
+                            email 'dmunoz@meaningcloud.com'
+                        }
                     }
                 }
             }
