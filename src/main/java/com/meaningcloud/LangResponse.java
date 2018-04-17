@@ -20,7 +20,7 @@ public class LangResponse extends Response{
      * @return A list of detected languages
      */
     public List<Language> getLanguageList() {
-        return languageList;
+        return list(languageList);
     }
 
     /**

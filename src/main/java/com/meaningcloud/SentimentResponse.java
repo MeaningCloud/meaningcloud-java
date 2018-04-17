@@ -93,7 +93,7 @@ public class SentimentResponse extends Response {
          * @see Segment
          */
         public List<Segment> getSegmentList() {
-            return segmentList;
+            return list(segmentList);
         }
 
         /**
@@ -102,7 +102,7 @@ public class SentimentResponse extends Response {
          * @see Sentimented
          */
         public List<Sentimented> getSentimentedEntityList() {
-            return sentimentedEntityList;
+            return list(sentimentedEntityList);
         }
 
         /**
@@ -111,7 +111,7 @@ public class SentimentResponse extends Response {
          * @see Sentimented
          */
         public List<Sentimented> getSentimentedConceptList() {
-            return sentimentedConceptList;
+            return list(sentimentedConceptList);
         }
     }
 
@@ -248,7 +248,7 @@ public class SentimentResponse extends Response {
          * @see Sentimented
          */
         public List<Sentimented> getSentimentedEntityList() {
-            return sentimentedEntityList;
+            return list(sentimentedEntityList);
         }
 
         /**
@@ -257,7 +257,7 @@ public class SentimentResponse extends Response {
          * @see Sentimented
          */
         public List<Sentimented> getSentimentedConceptList() {
-            return sentimentedConceptList;
+            return list(sentimentedConceptList);
         }
 
         /**
@@ -349,7 +349,7 @@ public class SentimentResponse extends Response {
          * @see Polarity
          */
         public List<Polarity> getPolarityTermList() {
-            return polarityTermList;
+            return list(polarityTermList);
         }
 
         /**
@@ -358,7 +358,7 @@ public class SentimentResponse extends Response {
          * @see Concept
          */
         public List<Concept> getSentimentedConceptList() {
-            return sentimentedConceptList;
+            return list(sentimentedConceptList);
         }
     }
 
@@ -453,7 +453,7 @@ public class SentimentResponse extends Response {
      * @see Sentimented
      */
     public List<Sentimented> getSentimentedEntityList() {
-        return sentimentedEntityList;
+        return list(sentimentedEntityList);
     }
 
     @SerializedName("sentimented_concept_list")
@@ -464,7 +464,7 @@ public class SentimentResponse extends Response {
      * @return A list of the concepts identified in the text
      */
     public List<Sentimented> getSentimentedConceptList() {
-        return sentimentedConceptList;
+        return list(sentimentedConceptList);
     }
 
     private String model;

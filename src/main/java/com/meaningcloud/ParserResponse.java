@@ -120,7 +120,7 @@ public class ParserResponse extends Response {
         @SerializedName("sense_list")
         private List<Sense> senseList;
         @SerializedName("topic_list")
-        private Topic topicList;
+        private Topic topicList; // despite its name, it is not a list.
 
         /**
          * Indicates which is the type of the token
@@ -195,7 +195,7 @@ public class ParserResponse extends Response {
          * @see Token
          */
         public List<Token> getTokenList() {
-            return tokenList;
+            return list(tokenList);
         }
 
         /**
@@ -212,7 +212,7 @@ public class ParserResponse extends Response {
          * @see Analysis
          */
         public List<Analysis> getAnalysisList() {
-            return analysisList;
+            return list(analysisList);
         }
 
         /**
@@ -229,7 +229,7 @@ public class ParserResponse extends Response {
          * @see TreeRelation
          */
         public List<TreeRelation> getSyntacticTreeRelationList() {
-            return syntacticTreeRelationList;
+            return list(syntacticTreeRelationList);
         }
 
         /**
@@ -238,7 +238,7 @@ public class ParserResponse extends Response {
          * @see Sense
          */
         public List<Sense> getSenseList() {
-            return senseList;
+            return list(senseList);
         }
 
         /**
@@ -354,7 +354,7 @@ public class ParserResponse extends Response {
          * @see SenseId
          */
         public List<SenseId> getSenseIdList() {
-            return senseIdList;
+            return list(senseIdList);
         }
     }
 
@@ -458,7 +458,7 @@ public class ParserResponse extends Response {
          * @see Entity
          */
         public List<Entity> getEntityList() {
-            return entityList;
+            return list(entityList);
         }
 
         /**
@@ -467,7 +467,7 @@ public class ParserResponse extends Response {
          * @see Concept
          */
         public List<Concept> getConceptList() {
-            return conceptList;
+            return list(conceptList);
         }
 
         /**
@@ -476,7 +476,7 @@ public class ParserResponse extends Response {
          * @see Time
          */
         public List<Time> getTimeExpressionList() {
-            return timeExpressionList;
+            return list(timeExpressionList);
         }
 
         /**
@@ -485,7 +485,7 @@ public class ParserResponse extends Response {
          * @see Money
          */
         public List<Money> getMoneyExpressionList() {
-            return moneyExpressionList;
+            return list(moneyExpressionList);
         }
 
         /**
@@ -494,7 +494,7 @@ public class ParserResponse extends Response {
          * @see Quantity
          */
         public List<Quantity> getQuantityExpressionList() {
-            return quantityExpressionList;
+            return list(quantityExpressionList);
         }
 
         /**
@@ -503,7 +503,7 @@ public class ParserResponse extends Response {
          * @see Other
          */
         public List<Other> getOtherExpressionList() {
-            return otherExpressionList;
+            return list(otherExpressionList);
         }
 
         /**
@@ -512,7 +512,7 @@ public class ParserResponse extends Response {
          * @see Quotation
          */
         public List<Quotation> getQuotationList() {
-            return quotationList;
+            return list(quotationList);
         }
 
         /**
@@ -521,7 +521,7 @@ public class ParserResponse extends Response {
          * @see Relation
          */
         public List<Relation> getRelationList() {
-            return relationList;
+            return list(relationList);
         }
 
     }
@@ -899,7 +899,7 @@ public class ParserResponse extends Response {
          * @see Semtheme
          */
         public List<Semtheme> getSemthemeList() {
-            return semthemeList;
+            return list(semthemeList);
         }
     }
 
@@ -944,7 +944,7 @@ public class ParserResponse extends Response {
          * @see Semtheme
          */
         public List<Semtheme> getSemthemeList() {
-            return semthemeList;
+            return list(semthemeList);
         }
     }
 
@@ -1075,7 +1075,7 @@ public class ParserResponse extends Response {
          * @return A list of complements of the verb
          */
         public List<Complement> getComplementList() {
-            return complementList;
+            return list(complementList);
         }
 
         /**
@@ -1154,7 +1154,7 @@ public class ParserResponse extends Response {
      * @return A list elemental tokens that will provide the morphological analysis
      */
     public List<Token> getTokenList() {
-        return tokenList;
+        return list(tokenList);
     }
 
     /**

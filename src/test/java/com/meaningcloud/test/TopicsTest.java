@@ -446,4 +446,12 @@ public class TopicsTest extends TestSuper {
                 .withDictionary("a", "b", "c")
                 .send();
     }
+
+    @Test
+    public void emptyLists() throws IOException, Request.ParameterValidationException {
+        String response = "{\"status\":{\"code\":\"0\",\"msg\":\"OK\",\"credits\":\"1\",\"remaining_credits\":\"39998\"}}";
+        TopicsResponse r = TopicsResponse.from(response);
+        assertNotNull(r.getEntityList());
+        assertEquals(0, r.getEntityList().size());
+    }
 }

@@ -62,7 +62,7 @@ public class ClassResponse extends Response {
          * @see Term
          */
         public List<Term> getTermList() {
-            return termList;
+            return list(termList);
         }
     }
 
@@ -100,7 +100,7 @@ public class ClassResponse extends Response {
      * @see Category
      */
     public List<Category> getCategoryList() {
-        return categoryList;
+        return list(categoryList);
     }
 
 

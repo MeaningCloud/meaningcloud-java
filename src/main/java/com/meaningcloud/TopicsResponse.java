@@ -80,7 +80,7 @@ public class TopicsResponse extends Response {
          * @see SemGeo
          */
         public List<SemGeo> getSemGeoList() {
-            return semGeoList;
+            return list(semGeoList);
         }
 
         /**
@@ -88,7 +88,7 @@ public class TopicsResponse extends Response {
          * @return A list of gateways to different open data sources
          */
         public List<String> getSemldList() {
-            return semldList;
+            return list(semldList);
         }
 
         /**
@@ -97,7 +97,7 @@ public class TopicsResponse extends Response {
          * @see Theme
          */
         public List<Theme> getSemThemeList() {
-            return semThemeList;
+            return list(semThemeList);
         }
 
         /**
@@ -106,7 +106,7 @@ public class TopicsResponse extends Response {
          * @see Variant
          */
         public List<Variant> getVariantList() {
-            return variantList;
+            return list(variantList);
         }
 
         /**
@@ -457,7 +457,7 @@ public class TopicsResponse extends Response {
          * @see StandardGeoInfo
          */
         public List<StandardGeoInfo> getStandardList() {
-            return standardList;
+            return list(standardList);
         }
     }
 
@@ -554,7 +554,7 @@ public class TopicsResponse extends Response {
      * @see Entity
      */
     public List<Entity> getEntityList() {
-        return entityList;
+        return list(entityList);
     }
 
     /**
@@ -563,7 +563,7 @@ public class TopicsResponse extends Response {
      * @see Concept
      */
     public List<Concept> getConceptList() {
-        return conceptList;
+        return list(conceptList);
     }
 
     /**
@@ -572,7 +572,7 @@ public class TopicsResponse extends Response {
      * @see Time
      */
     public List<Time> getTimeExpressionList() {
-        return timeExpressionList;
+        return list(timeExpressionList);
     }
 
     /**
@@ -581,7 +581,7 @@ public class TopicsResponse extends Response {
      * @see Relation
      */
     public List<Relation> getRelationList() {
-        return relationList;
+        return list(relationList);
     }
 
     /**
@@ -590,7 +590,7 @@ public class TopicsResponse extends Response {
      * @see Money
      */
     public List<Money> getMoneyExpressionList() {
-        return moneyExpressionList;
+        return list(moneyExpressionList);
     }
 
     /**
@@ -599,7 +599,7 @@ public class TopicsResponse extends Response {
      * @see Other
      */
     public List<Other> getOtherExpressionList() {
-        return otherExpressionList;
+        return list(otherExpressionList);
     }
 
     /**
@@ -608,7 +608,7 @@ public class TopicsResponse extends Response {
      * @see Quantity
      */
     public List<Quantity> getQuantityExpressionList() {
-        return quantityExpressionList;
+        return list(quantityExpressionList);
     }
 
     /**
@@ -617,7 +617,7 @@ public class TopicsResponse extends Response {
      * @see Quotation
      */
     public List<Quotation> getQuotationList() {
-        return quotationList;
+        return list(quotationList);
     }
 
     /**

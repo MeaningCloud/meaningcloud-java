@@ -72,7 +72,7 @@ public class DeepCatResponse extends  Response {
          * @see Term
          */
         public List<Term> getTermList() {
-            return termList;
+            return list(termList);
         }
     }
 
@@ -108,7 +108,7 @@ public class DeepCatResponse extends  Response {
          * @see Offsets
          */
         public List<Offsets> getOffsetList() {
-            return offsetList;
+            return list(offsetList);
         }
     }
 
@@ -144,7 +144,7 @@ public class DeepCatResponse extends  Response {
      * @return A list of categories
      */
     public List<Category> getCategoryList() {
-        return categoryList;
+        return list(categoryList);
     }
 
 
