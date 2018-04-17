@@ -60,7 +60,7 @@ uploadArchives {
                 name 'MeaningCloud Java SDK'
                 packaging 'jar'
                 description 'MeaningCloud official Java SDK'
-                url 'http://www.meaningcloud.com'
+                url 'https://www.meaningcloud.com'
 
                 scm {
                     connection 'scm:git:https://github.com/MeaningCloud/meaningcloud-java'
