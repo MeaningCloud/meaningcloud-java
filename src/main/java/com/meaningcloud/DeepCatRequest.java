@@ -152,7 +152,7 @@ public class DeepCatRequest extends Request {
             params.put(x.getKey(), x.getValue());
         }
 
-        String response = post(endpoint, params);
+        String response = transport.send(endpoint, params);
         return DeepCatResponse.from(response);
     }
 
@@ -183,12 +183,13 @@ public class DeepCatRequest extends Request {
      * @param payload Interface to obtain parameters
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
-    public DeepCatRequest (String key,
+    public DeepCatRequest(Transport transport,
+                          String key,
                           String model,
                           boolean verbose,
                           boolean polarity,
                           Payload payload) throws ParameterValidationException {
-        super(key);
+        super(transport, key);
         this.model = model;
         this.verbose = verbose;
         this.polarity = polarity;
@@ -203,7 +204,18 @@ public class DeepCatRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public static DeepCatRequest build(String key, String model) throws ParameterValidationException {
-        return new DeepCatRequest(key, model, DEFAULT_VERBOSE, DEFAULT_POLARITY, DEFAULT_PAYLOAD);
+        return new DeepCatRequest(DEFAULT_TRANSPORT, key, model, DEFAULT_VERBOSE, DEFAULT_POLARITY, DEFAULT_PAYLOAD);
+    }
+
+    /**
+     * Builds a deep categorization request with the given API key and model
+     * @param key User's API key
+     * @param model Categorization model to use
+     * @return A deep categorization request object
+     * @throws ParameterValidationException Raised when a parameter value can't be accepted
+     */
+    public static DeepCatRequest build(Transport transport, String key, String model) throws ParameterValidationException {
+        return new DeepCatRequest(transport, key, model, DEFAULT_VERBOSE, DEFAULT_POLARITY, DEFAULT_PAYLOAD);
     }
 
     /**
@@ -213,7 +225,7 @@ public class DeepCatRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public DeepCatRequest withText(String txt) throws ParameterValidationException {
-        return new DeepCatRequest(key, model, verbose, polarity, new TextPayload(txt));
+        return new DeepCatRequest(transport, key, model, verbose, polarity, new TextPayload(txt));
     }
 
     /**
@@ -224,7 +236,7 @@ public class DeepCatRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public DeepCatRequest withFile(File file) throws IOException, ParameterValidationException {
-        return new DeepCatRequest(key, model, verbose, polarity, new FilePayload(file));
+        return new DeepCatRequest(transport, key, model, verbose, polarity, new FilePayload(file));
     }
 
     /**
@@ -234,7 +246,7 @@ public class DeepCatRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public DeepCatRequest withURL(URL url) throws ParameterValidationException {
-        return new DeepCatRequest(key, model, verbose, polarity, new URLPayload(url.toString()));
+        return new DeepCatRequest(transport, key, model, verbose, polarity, new URLPayload(url.toString()));
     }
 
     /**
@@ -244,7 +256,7 @@ public class DeepCatRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public DeepCatRequest withVerbose(boolean verbose) throws ParameterValidationException {
-        return new DeepCatRequest(key, model, verbose, polarity, payload);
+        return new DeepCatRequest(transport, key, model, verbose, polarity, payload);
     }
 
     /**
@@ -254,6 +266,6 @@ public class DeepCatRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public DeepCatRequest withPolarity(boolean polarity) throws ParameterValidationException {
-        return new DeepCatRequest(key, model, verbose, polarity, payload);
+        return new DeepCatRequest(transport, key, model, verbose, polarity, payload);
     }
 }

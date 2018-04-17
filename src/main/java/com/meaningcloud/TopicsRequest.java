@@ -18,6 +18,7 @@ public class TopicsRequest extends Request {
     public static final Language DEFAULT_INTERFACE_LANG = Language.EN;
     public static final TopicType DEFAULT_TOPICS_TO_DETECT = TopicType.ALL;
     public static final Payload DEFAULT_PAYLOAD = new NoPayload();
+    public static final String[] DEFAULT_DICTIONARIES = new String[0];
 
     /**
      * Interface to obtain parameters
@@ -133,6 +134,7 @@ public class TopicsRequest extends Request {
     public final Language interfaceLang;
     public final TopicType topicsToDetect;
     public final Payload payload;
+    public final String[] dictionaries;
 
     /**
      * Sends the request to a specific endpoint
@@ -146,12 +148,13 @@ public class TopicsRequest extends Request {
         params.put("lang", lang.code());
         params.put("ilang", interfaceLang.code());
         params.put("tt", topicsToDetect.code());
+        params.put("ud", String.join("|", dictionaries));
 
         for (Map.Entry<String, String> x : payload.getParams().entrySet()) {
             params.put(x.getKey(), x.getValue());
         }
 
-        String response = post(endpoint, params);
+        String response = transport.send(endpoint, params);
         return TopicsResponse.from(response);
     }
 
@@ -182,16 +185,19 @@ public class TopicsRequest extends Request {
      * @param payload Interface to obtain parameters
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
-    private TopicsRequest(String key,
+    private TopicsRequest(Transport transport,
+                          String key,
                           Language lang,
                           Language interfaceLang,
                           TopicType topicsToDetect,
-                          Payload payload) throws ParameterValidationException {
-        super(key);
+                          Payload payload,
+                          String[] dictionaries) throws ParameterValidationException {
+        super(transport, key);
         this.lang = lang;
         this.interfaceLang = interfaceLang;
         this.topicsToDetect = topicsToDetect;
         this.payload = payload;
+        this.dictionaries = dictionaries;
     }
 
     /**
@@ -202,7 +208,18 @@ public class TopicsRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public static TopicsRequest build(String key, Language lang) throws ParameterValidationException {
-        return new TopicsRequest(key, lang, DEFAULT_INTERFACE_LANG, DEFAULT_TOPICS_TO_DETECT, DEFAULT_PAYLOAD);
+        return new TopicsRequest(DEFAULT_TRANSPORT, key, lang, DEFAULT_INTERFACE_LANG, DEFAULT_TOPICS_TO_DETECT, DEFAULT_PAYLOAD, DEFAULT_DICTIONARIES);
+    }
+
+    /**
+     * Builds a topics request with the given API key and language
+     * @param key User's API key
+     * @param lang The test language
+     * @return A topics request object
+     * @throws ParameterValidationException Raised when a parameter value can't be accepted
+     */
+    public static TopicsRequest build(Transport transport, String key, Language lang) throws ParameterValidationException {
+        return new TopicsRequest(transport, key, lang, DEFAULT_INTERFACE_LANG, DEFAULT_TOPICS_TO_DETECT, DEFAULT_PAYLOAD, DEFAULT_DICTIONARIES);
     }
 
     /**
@@ -212,7 +229,7 @@ public class TopicsRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public TopicsRequest withInterfaceLanguage(Language ilang) throws ParameterValidationException {
-        return new TopicsRequest(key, lang, ilang, topicsToDetect, payload);
+        return new TopicsRequest(transport, key, lang, ilang, topicsToDetect, payload, dictionaries);
     }
 
     /**
@@ -222,7 +239,7 @@ public class TopicsRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public TopicsRequest withTopicsToDetect(TopicType ttd) throws ParameterValidationException {
-        return new TopicsRequest(key, lang, interfaceLang, ttd, payload);
+        return new TopicsRequest(transport, key, lang, interfaceLang, ttd, payload, dictionaries);
     }
 
 
@@ -233,7 +250,7 @@ public class TopicsRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public TopicsRequest withText(String txt) throws ParameterValidationException {
-        return new TopicsRequest(key, lang, interfaceLang, topicsToDetect, new TextPayload(txt));
+        return new TopicsRequest(transport, key, lang, interfaceLang, topicsToDetect, new TextPayload(txt), dictionaries);
     }
 
     /**
@@ -243,7 +260,7 @@ public class TopicsRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public TopicsRequest withURL(URL url) throws ParameterValidationException {
-        return new TopicsRequest(key, lang, interfaceLang, topicsToDetect, new URLPayload(url.toString()));
+        return new TopicsRequest(transport, key, lang, interfaceLang, topicsToDetect, new URLPayload(url.toString()), dictionaries);
     }
 
     /**
@@ -254,6 +271,17 @@ public class TopicsRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public TopicsRequest withFile(File file) throws IOException, ParameterValidationException {
-        return new TopicsRequest(key, lang, interfaceLang, topicsToDetect, new FilePayload(file));
+        return new TopicsRequest(transport, key, lang, interfaceLang, topicsToDetect, new FilePayload(file), dictionaries);
+    }
+
+    /**
+     * Builds a topics request with a set of user dictionaries
+     * @param dict the user dictionaries' names
+     * @return A topics request object
+     * @throws IOException Raised when a parameter value can't be accepted
+     * @throws ParameterValidationException Raised when a parameter value can't be accepted
+     */
+    public TopicsRequest withDictionary(String... dict) throws IOException, ParameterValidationException {
+        return new TopicsRequest(transport, key, lang, interfaceLang, topicsToDetect, payload, dict);
     }
 }

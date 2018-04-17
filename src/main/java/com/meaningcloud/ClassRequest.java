@@ -152,7 +152,7 @@ public class ClassRequest extends Request{
             params.put(x.getKey(), x.getValue());
         }
 
-        String response = post(endpoint, params);
+        String response = transport.send(endpoint, params);
         return ClassResponse.from(response);
     }
 
@@ -183,12 +183,13 @@ public class ClassRequest extends Request{
      * @param payload Interface to obtain parameters
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
-    private ClassRequest (String key,
+    private ClassRequest (Transport transport,
+                          String key,
                           String model,
                           boolean verbose,
                           String categories_filter,
                           Payload payload) throws ParameterValidationException {
-        super(key);
+        super(transport, key);
         this.model = model;
         this.verbose = verbose;
         this.categories_filter = categories_filter;
@@ -203,7 +204,18 @@ public class ClassRequest extends Request{
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public static ClassRequest build(String key, String model) throws ParameterValidationException {
-        return new ClassRequest(key, model, DEFAULT_VERBOSE, DEFAULT_CATEGORIES_FILTER, DEFAULT_PAYLOAD);
+        return new ClassRequest(DEFAULT_TRANSPORT, key, model, DEFAULT_VERBOSE, DEFAULT_CATEGORIES_FILTER, DEFAULT_PAYLOAD);
+    }
+
+    /**
+     * Builds a class request with the given API key and model
+     * @param key User's API key
+     * @param model The classification model
+     * @return A class request object
+     * @throws ParameterValidationException Raised when a parameter value can't be accepted
+     */
+    public static ClassRequest build(Transport transport, String key, String model) throws ParameterValidationException {
+        return new ClassRequest(transport, key, model, DEFAULT_VERBOSE, DEFAULT_CATEGORIES_FILTER, DEFAULT_PAYLOAD);
     }
 
     /**
@@ -213,7 +225,7 @@ public class ClassRequest extends Request{
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ClassRequest withText(String txt) throws ParameterValidationException {
-        return new ClassRequest(key, model, verbose, categories_filter, new TextPayload(txt));
+        return new ClassRequest(transport, key, model, verbose, categories_filter, new TextPayload(txt));
     }
 
     /**
@@ -224,7 +236,7 @@ public class ClassRequest extends Request{
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ClassRequest withFile(File file) throws IOException, ParameterValidationException {
-        return new ClassRequest(key, model, verbose, categories_filter, new FilePayload(file));
+        return new ClassRequest(transport, key, model, verbose, categories_filter, new FilePayload(file));
     }
 
     /**
@@ -234,7 +246,7 @@ public class ClassRequest extends Request{
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ClassRequest withURL(URL url) throws ParameterValidationException {
-        return new ClassRequest(key, model, verbose, categories_filter, new URLPayload(url.toString()));
+        return new ClassRequest(transport, key, model, verbose, categories_filter, new URLPayload(url.toString()));
     }
 
     /**
@@ -244,7 +256,7 @@ public class ClassRequest extends Request{
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ClassRequest withVerbose(boolean verbose) throws ParameterValidationException {
-        return new ClassRequest(key, model, verbose, categories_filter, payload);
+        return new ClassRequest(transport, key, model, verbose, categories_filter, payload);
     }
 
     /**
@@ -254,7 +266,6 @@ public class ClassRequest extends Request{
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ClassRequest withCategoryFilter(String category) throws ParameterValidationException {
-        return new ClassRequest(key, model, verbose, category, payload);
+        return new ClassRequest(transport, key, model, verbose, category, payload);
     }
-
 }

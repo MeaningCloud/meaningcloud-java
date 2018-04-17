@@ -182,7 +182,7 @@ public class ParserRequest extends Request {
             params.put(x.getKey(), x.getValue());
         }
 
-        String response = post(endpoint, params);
+        String response = transport.send(endpoint, params);
         return ParserResponse.from(response);
     }
 
@@ -223,7 +223,8 @@ public class ParserRequest extends Request {
      * @param payload Interface to obtain parameters
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
-    public ParserRequest(String key,
+    public ParserRequest(Transport transport,
+                         String key,
                          Language lang,
                          ILanguage ilang,
                          TopicType topicToDetect,
@@ -238,7 +239,7 @@ public class ParserRequest extends Request {
                          String st,
                          String timeref,
                          Payload payload) throws ParameterValidationException {
-        super(key);
+        super(transport, key);
         this.lang = lang;
         this.ilang = ilang;
         this.topicToDetect = topicToDetect;
@@ -264,7 +265,19 @@ public class ParserRequest extends Request {
      * @see Request.Language
      */
     public static ParserRequest build(String key, Language lang) throws ParameterValidationException {
-        return new ParserRequest(key, lang, DEFAULT_ILANG, DEFAULT_TOPICS_TO_DETECT, DEFAULT_VERBOSE, DEFAULT_TXTF, DEFAULT_RT, DEFAULT_UW, DEFAULT_DM, DEFAULT_SDG, DEFAULT_CONT, DEFAULT_SM, DEFAULT_ST, DEFAULT_TIMEREF, DEFAULT_PAYLOAD);
+        return new ParserRequest(DEFAULT_TRANSPORT, key, lang, DEFAULT_ILANG, DEFAULT_TOPICS_TO_DETECT, DEFAULT_VERBOSE, DEFAULT_TXTF, DEFAULT_RT, DEFAULT_UW, DEFAULT_DM, DEFAULT_SDG, DEFAULT_CONT, DEFAULT_SM, DEFAULT_ST, DEFAULT_TIMEREF, DEFAULT_PAYLOAD);
+    }
+
+    /**
+     * Builds a parser request with the given API key and language
+     * @param key User's API key
+     * @param lang The text language
+     * @return A parser request object
+     * @throws ParameterValidationException Raised when a parameter value can't be accepted
+     * @see Request.Language
+     */
+    public static ParserRequest build(Transport transport, String key, Language lang) throws ParameterValidationException {
+        return new ParserRequest(transport, key, lang, DEFAULT_ILANG, DEFAULT_TOPICS_TO_DETECT, DEFAULT_VERBOSE, DEFAULT_TXTF, DEFAULT_RT, DEFAULT_UW, DEFAULT_DM, DEFAULT_SDG, DEFAULT_CONT, DEFAULT_SM, DEFAULT_ST, DEFAULT_TIMEREF, DEFAULT_PAYLOAD);
     }
 
     /**
@@ -274,7 +287,7 @@ public class ParserRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ParserRequest withText(String txt) throws ParameterValidationException {
-        return new ParserRequest(key, lang, ilang, topicToDetect, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, new TextPayload(txt));
+        return new ParserRequest(transport, key, lang, ilang, topicToDetect, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, new TextPayload(txt));
     }
 
     /**
@@ -285,7 +298,7 @@ public class ParserRequest extends Request {
      * @see Request.Language
      */
     public ParserRequest withInterfaceLanguage(ILanguage ilang) throws ParameterValidationException {
-        return new ParserRequest(key, lang, ilang, topicToDetect, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, payload);
+        return new ParserRequest(transport, key, lang, ilang, topicToDetect, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, payload);
     }
 
     /**
@@ -296,7 +309,7 @@ public class ParserRequest extends Request {
      * @see Request.TopicType
      */
     public ParserRequest withTopicsToDetect(TopicType ttd) throws ParameterValidationException {
-        return new ParserRequest(key, lang, ilang, ttd, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, payload);
+        return new ParserRequest(transport, key, lang, ilang, ttd, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, payload);
     }
 
     /**
@@ -306,7 +319,7 @@ public class ParserRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ParserRequest withVerbose(boolean verbose) throws ParameterValidationException {
-        return new ParserRequest(key, lang, ilang, topicToDetect, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, payload);
+        return new ParserRequest(transport, key, lang, ilang, topicToDetect, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, payload);
     }
 
     /**
@@ -317,7 +330,7 @@ public class ParserRequest extends Request {
      * @see Request.TextFormat
      */
     public ParserRequest withTextFormat(TextFormat txtf) throws ParameterValidationException {
-        return new ParserRequest(key, lang, ilang, topicToDetect, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, payload);
+        return new ParserRequest(transport, key, lang, ilang, topicToDetect, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, payload);
     }
 
     /**
@@ -327,7 +340,7 @@ public class ParserRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ParserRequest withTimeRef(String timeref) throws ParameterValidationException {
-        return new ParserRequest(key, lang, ilang, topicToDetect, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, payload);
+        return new ParserRequest(transport, key, lang, ilang, topicToDetect, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, payload);
     }
 
     /**
@@ -338,7 +351,7 @@ public class ParserRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ParserRequest withFile(File file) throws IOException, ParameterValidationException {
-        return new ParserRequest(key, lang, ilang, topicToDetect, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, new FilePayload(file));
+        return new ParserRequest(transport, key, lang, ilang, topicToDetect, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, new FilePayload(file));
     }
 
     /**
@@ -348,6 +361,6 @@ public class ParserRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ParserRequest withURL(URL url) throws ParameterValidationException {
-        return new ParserRequest(key, lang, ilang, topicToDetect, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, new URLPayload(url.toString()));
+        return new ParserRequest(transport, key, lang, ilang, topicToDetect, verbose, txtf, rt, uw, dm, sdg, cont, sm, st, timeref, new URLPayload(url.toString()));
     }
 }

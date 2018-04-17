@@ -14,6 +14,7 @@ import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Throttling.class)
 public class DeepCatTest extends TestSuper {
@@ -80,11 +81,9 @@ public class DeepCatTest extends TestSuper {
         assertEquals(87, r.getCategoryList().get(0).getTermList().get(0).getOffsetList().get(0).getEndp(), 0);
     }
 
-    /***** test Topic Request *****/
 
-    
     @Test @Throttle
-    public void testTopicsRequestIAB_en() throws IOException, Request.ParameterValidationException {
+    public void testRequestIAB_en() throws IOException, Request.ParameterValidationException {
         DeepCatResponse r = DeepCatRequest
                 .build(MEANINGCLOUD_KEY, "IAB_2.0_en")
                 .withText("Star Trek is an American science fiction entertainment franchise based on the television series created by Gene Roddenberry")
@@ -92,15 +91,15 @@ public class DeepCatTest extends TestSuper {
 
         assertEquals("OK", r.status.msg);
         assertEquals(5, r.getCategoryList().size());
-        assertEquals("Television>ScienceFictionTV", r.getCategoryList().get(0).getCode());
-        assertEquals("Television>Science Fiction TV", r.getCategoryList().get(0).getLabel());
+        assertTrue(detectsCode("Television>ScienceFictionTV", r));
+        assertTrue(detectsLabel("Television>Science Fiction TV", r));
         assertEquals(1, r.getCategoryList().get(0).getAbsRelevance(), 0);
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
     }
 
     
     @Test @Throttle
-    public void testTopicsRequestIAB_es() throws IOException, Request.ParameterValidationException {
+    public void testRequestIAB_es() throws IOException, Request.ParameterValidationException {
         DeepCatResponse r = DeepCatRequest
                 .build(MEANINGCLOUD_KEY, "IAB_2.0_es")
                 .withText("Star Trek is an American science fiction entertainment franchise based on the television series created by Gene Roddenberry")
@@ -114,9 +113,23 @@ public class DeepCatTest extends TestSuper {
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
     }
 
+    boolean detectsCode(String code, DeepCatResponse r) {
+        for (DeepCatResponse.Category cat : r.getCategoryList()) {
+            if (cat.getCode().equals(code)) return true;
+        }
+        return false;
+    }
+
+    boolean detectsLabel(String label, DeepCatResponse r) {
+        for (DeepCatResponse.Category cat : r.getCategoryList()) {
+            if (cat.getLabel().equals(label)) return true;
+        }
+        return false;
+    }
+
     
     @Test @Throttle
-    public void testTopicsVerboseIAB_en() throws IOException, Request.ParameterValidationException {
+    public void testVerboseIAB_en() throws IOException, Request.ParameterValidationException {
         DeepCatResponse r = DeepCatRequest
                 .build(MEANINGCLOUD_KEY, "IAB_2.0_en")
                 .withText("Star Trek is an American science fiction entertainment franchise based on the television series created by Gene Roddenberry")
@@ -125,8 +138,8 @@ public class DeepCatTest extends TestSuper {
 
         assertEquals("OK", r.status.msg);
         assertEquals(5, r.getCategoryList().size());
-        assertEquals("Television>ScienceFictionTV", r.getCategoryList().get(0).getCode());
-        assertEquals("Television>Science Fiction TV", r.getCategoryList().get(0).getLabel());
+        assertTrue(detectsCode("Television>ScienceFictionTV", r));
+        assertTrue(detectsLabel("Television>Science Fiction TV", r));
         assertEquals(1, r.getCategoryList().get(0).getAbsRelevance(), 0);
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
         assertEquals(1, r.getCategoryList().get(0).getTermList().get(0).getAbsRelevance(), 0);
@@ -134,7 +147,7 @@ public class DeepCatTest extends TestSuper {
 
     
     @Test @Throttle
-    public void testTopicsRequestPolarityIAB_en() throws IOException, Request.ParameterValidationException {
+    public void testRequestPolarityIAB_en() throws IOException, Request.ParameterValidationException {
         DeepCatResponse r = DeepCatRequest
                 .build(MEANINGCLOUD_KEY, "IAB_2.0_en")
                 .withText("Star Trek is an American science fiction entertainment franchise based on the television series created by Gene Roddenberry")
@@ -143,8 +156,8 @@ public class DeepCatTest extends TestSuper {
 
         assertEquals("OK", r.status.msg);
         assertEquals(5, r.getCategoryList().size());
-        assertEquals("Television>ScienceFictionTV", r.getCategoryList().get(0).getCode());
-        assertEquals("Television>Science Fiction TV", r.getCategoryList().get(0).getLabel());
+        assertTrue(detectsCode("Television>ScienceFictionTV", r));
+        assertTrue(detectsLabel("Television>Science Fiction TV", r));
         assertEquals(1, r.getCategoryList().get(0).getAbsRelevance(), 0);
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
         assertEquals("P", r.getCategoryList().get(0).getPolarity());
@@ -152,7 +165,7 @@ public class DeepCatTest extends TestSuper {
 
 
     @Test @Throttle
-    public void testTopicsRequestWithFile() throws IOException, Request.ParameterValidationException {
+    public void testRequestWithFile() throws IOException, Request.ParameterValidationException {
         File file = createTemporaryFileWithContents("Star Trek is an American science fiction entertainment franchise based on the television series created by Gene Roddenberry");
 
         DeepCatResponse r = DeepCatRequest
@@ -162,15 +175,15 @@ public class DeepCatTest extends TestSuper {
 
         assertEquals("OK", r.status.msg);
         assertEquals(5, r.getCategoryList().size());
-        assertEquals("Television>ScienceFictionTV", r.getCategoryList().get(0).getCode());
-        assertEquals("Television>Science Fiction TV", r.getCategoryList().get(0).getLabel());
+        assertTrue(detectsCode("Television>ScienceFictionTV", r));
+        assertTrue(detectsLabel("Television>Science Fiction TV", r));
         assertEquals(1, r.getCategoryList().get(0).getAbsRelevance(), 0);
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
     }
 
     
     @Test @Throttle
-    public void testTopicsRequestWithURL() throws IOException, Request.ParameterValidationException {
+    public void testsRequestWithURL() throws IOException, Request.ParameterValidationException {
         DeepCatResponse r = DeepCatRequest
                 .build(MEANINGCLOUD_KEY, "IAB_2.0_en")
                 .withURL(new URL("https://www.nytimes.com/2018/01/25/science/plastic-coral-reefs.html?partner=rss&emc=rss"))

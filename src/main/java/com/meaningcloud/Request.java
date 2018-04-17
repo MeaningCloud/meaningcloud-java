@@ -1,20 +1,6 @@
 package com.meaningcloud;
 
-import org.apache.http.Consts;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 public class Request {
@@ -211,42 +197,19 @@ public class Request {
         }
     }
 
+    public static final Transport DEFAULT_TRANSPORT = new HTTP();
+
     protected final String key;
+    protected final Transport transport;
 
     /**
      * Constructor
+     * @param transport
      * @param key User's API key
+     * @see Transport
      */
-    protected Request(String key) {
+    protected Request(Transport transport, String key) {
+        this.transport = transport;
         this.key = key;
-    }
-
-    /**
-     * Post to request
-     * @param endpoint API server
-     * @param params Parameters to API call
-     * @return A string with API call
-     * @throws IOException Raised when a parameter value can't be accepted
-     */
-    protected String post(Endpoint endpoint, Map<String, String> params) throws IOException {
-        CloseableHttpClient client = HttpClientBuilder.create().build();
-        HttpPost post = new HttpPost(endpoint.getEndpoint());
-        post.setHeader("User-Agent", "MeaningCloud Java client");
-        List<NameValuePair> urlParameters = new ArrayList<>();
-        for (Map.Entry<String, String> x : params.entrySet()) {
-            urlParameters.add(new BasicNameValuePair(x.getKey(), x.getValue()));
-        }
-        UrlEncodedFormEntity x = new UrlEncodedFormEntity(urlParameters, Consts.UTF_8);
-        x.setContentEncoding("utf-8");
-        post.setEntity(x);
-
-        CloseableHttpResponse response = client.execute(post);
-        BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-        StringBuffer result = new StringBuffer();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            result.append(line);
-        }
-        return result.toString();
     }
 }

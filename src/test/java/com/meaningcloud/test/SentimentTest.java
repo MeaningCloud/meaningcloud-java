@@ -1,8 +1,6 @@
 package com.meaningcloud.test;
 
-import com.meaningcloud.Request;
-import com.meaningcloud.SentimentRequest;
-import com.meaningcloud.SentimentResponse;
+import com.meaningcloud.*;
 import com.meaningcloud.test.junit.Throttle;
 import com.meaningcloud.test.junit.Throttling;
 import org.junit.Test;
@@ -11,6 +9,7 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -337,5 +336,21 @@ public class SentimentTest extends TestSuper {
 
         assertEquals("OK", r.status.msg);
         assertNotNull(r.getSentenceList().get(0).getText());
+    }
+
+    @Test
+    public void testSentimentRequestWithDictionaries() throws IOException, Request.ParameterValidationException{
+        class TestTransport implements Transport {
+            @Override
+            public String send(Endpoint endpoint, Map<String, String> params) throws IOException {
+                assertEquals(params.get("ud"), "a|b");
+                return "{}";
+            }
+        }
+        SentimentResponse r = SentimentRequest
+                .build(new TestTransport(), MEANINGCLOUD_KEY, Request.Language.EN)
+                .withText("Something")
+                .withDictionaries("a", "b")
+                .send();
     }
 }

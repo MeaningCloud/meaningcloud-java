@@ -146,7 +146,7 @@ public class LangRequest extends Request{
             params.put(x.getKey(), x.getValue());
         }
 
-        String response = post(endpoint, params);
+        String response = transport.send(endpoint, params);
         return LangResponse.from(response);
     }
 
@@ -175,12 +175,13 @@ public class LangRequest extends Request{
      * @param relevance Relevance value associated to it
      * @param payload Interface to obtain parameters
      */
-    public LangRequest(String key,
+    public LangRequest(Transport transport,
+                       String key,
                        String selection,
                        boolean verbose,
                        int relevance,
                        Payload payload) {
-        super(key);
+        super(transport, key);
         this.selection = selection;
         this.verbose = verbose;
         this.relevance = relevance;
@@ -193,7 +194,16 @@ public class LangRequest extends Request{
      * @return A lang request object
      */
     public static LangRequest build(String key){
-        return new LangRequest(key, DEFAULT_SELECTION, DEFAULT_VERBOSE, DEFAULT_RELEVANCE, DEFAULT_PAYLOAD);
+        return new LangRequest(DEFAULT_TRANSPORT, key, DEFAULT_SELECTION, DEFAULT_VERBOSE, DEFAULT_RELEVANCE, DEFAULT_PAYLOAD);
+    }
+
+    /**
+     * Builds a lang request with the given API key
+     * @param key User's API key
+     * @return A lang request object
+     */
+    public static LangRequest build(Transport transport, String key){
+        return new LangRequest(transport, key, DEFAULT_SELECTION, DEFAULT_VERBOSE, DEFAULT_RELEVANCE, DEFAULT_PAYLOAD);
     }
 
     /**
@@ -202,7 +212,7 @@ public class LangRequest extends Request{
      * @return A lang request object
      */
     public LangRequest withVerbose(boolean verbose) {
-        return new LangRequest(key, selection, verbose, relevance, payload);
+        return new LangRequest(transport, key, selection, verbose, relevance, payload);
     }
 
     /**
@@ -211,7 +221,7 @@ public class LangRequest extends Request{
      * @return A lang request object
      */
     public LangRequest withText(String txt) {
-        return new LangRequest(key, selection, verbose, relevance, new TextPayload(txt));
+        return new LangRequest(transport, key, selection, verbose, relevance, new TextPayload(txt));
     }
 
     /**
@@ -220,7 +230,7 @@ public class LangRequest extends Request{
      * @return A lang request object
      */
     public LangRequest withSelection(String selection) {
-        return new LangRequest(key, selection, verbose, relevance, payload);
+        return new LangRequest(transport, key, selection, verbose, relevance, payload);
     }
 
     /**
@@ -230,7 +240,7 @@ public class LangRequest extends Request{
      * @throws IOException Raised when a parameter value can't be accepted
      */
      public LangRequest withFile(File file) throws IOException {
-        return new LangRequest(key, selection, verbose, relevance, new FilePayload(file));
+        return new LangRequest(transport, key, selection, verbose, relevance, new FilePayload(file));
     }
 
     /**
@@ -240,6 +250,6 @@ public class LangRequest extends Request{
      * @throws IOException Raised when a parameter value can't be accepted
      */
     public LangRequest withURL(URL url) throws IOException {
-        return new LangRequest(key, selection, verbose, relevance, new URLPayload(url.toString()));
+        return new LangRequest(transport, key, selection, verbose, relevance, new URLPayload(url.toString()));
     }
 }
