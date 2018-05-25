@@ -1,6 +1,4 @@
-group 'com.meaningcloud'
-version '0.9'
-
+apply from: 'version.gradle'
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'signing'
