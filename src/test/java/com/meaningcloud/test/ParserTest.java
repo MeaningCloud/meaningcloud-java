@@ -463,7 +463,7 @@ public class ParserTest extends TestSuper {
 
 
     @Test @Throttle
-    public void testParserRequestWhitFile() throws IOException, Request.ParameterValidationException {
+    public void testParserRequestWithFile() throws IOException, Request.ParameterValidationException {
         File file = createTemporaryFileWithContents("Star Trek is an American science fiction entertainment franchise based on the television series created by Gene Roddenberry");
 
         ParserResponse r = ParserRequest
@@ -478,7 +478,7 @@ public class ParserTest extends TestSuper {
 
     
     @Test @Throttle
-    public void testParserRequestWhitURL() throws IOException, Request.ParameterValidationException {
+    public void testParserRequestWithURL() throws IOException, Request.ParameterValidationException {
         URL url = new URL("https://www.google.com");
         ParserResponse r = ParserRequest
                 .build(MEANINGCLOUD_KEY, Request.Language.EN)
