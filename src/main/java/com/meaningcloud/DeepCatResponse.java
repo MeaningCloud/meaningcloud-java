@@ -151,7 +151,7 @@ public class DeepCatResponse extends  Response {
     /**
      * DeepCatResponse factory method
      * @param response the JSON response from MeaningCloud Deep Categorization API
-     * @return
+     * @return DeepCatResponse
      */
     public static DeepCatResponse from(String response) {
         GsonBuilder builder = new GsonBuilder();

@@ -90,7 +90,8 @@ public class DeepCatTest extends TestSuper {
                 .send();
 
         assertEquals("OK", r.status.msg);
-        assertEquals(5, r.getCategoryList().size());
+        assertTrue(detectsCode("Movies", r));
+        assertTrue(detectsLabel("Movies", r));
         assertTrue(detectsCode("Television>ScienceFictionTV", r));
         assertTrue(detectsLabel("Television>Science Fiction TV", r));
         assertEquals(1, r.getCategoryList().get(0).getAbsRelevance(), 0);
@@ -137,7 +138,8 @@ public class DeepCatTest extends TestSuper {
                 .send();
 
         assertEquals("OK", r.status.msg);
-        assertEquals(5, r.getCategoryList().size());
+        assertTrue(detectsCode("Movies", r));
+        assertTrue(detectsLabel("Movies", r));
         assertTrue(detectsCode("Television>ScienceFictionTV", r));
         assertTrue(detectsLabel("Television>Science Fiction TV", r));
         assertEquals(1, r.getCategoryList().get(0).getAbsRelevance(), 0);
@@ -155,7 +157,8 @@ public class DeepCatTest extends TestSuper {
                 .send();
 
         assertEquals("OK", r.status.msg);
-        assertEquals(5, r.getCategoryList().size());
+        assertTrue(detectsCode("Movies", r));
+        assertTrue(detectsLabel("Movies", r));
         assertTrue(detectsCode("Television>ScienceFictionTV", r));
         assertTrue(detectsLabel("Television>Science Fiction TV", r));
         assertEquals(1, r.getCategoryList().get(0).getAbsRelevance(), 0);
@@ -174,7 +177,8 @@ public class DeepCatTest extends TestSuper {
                 .send();
 
         assertEquals("OK", r.status.msg);
-        assertEquals(5, r.getCategoryList().size());
+        assertTrue(detectsCode("Movies", r));
+        assertTrue(detectsLabel("Movies", r));
         assertTrue(detectsCode("Television>ScienceFictionTV", r));
         assertTrue(detectsLabel("Television>Science Fiction TV", r));
         assertEquals(1, r.getCategoryList().get(0).getAbsRelevance(), 0);

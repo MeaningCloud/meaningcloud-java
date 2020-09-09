@@ -107,7 +107,7 @@ public class ClassResponse extends Response {
     /**
      * ClassResponse factory method
      * @param response the JSON response from MeaningCloud Text Classification API
-     * @return
+     * @return ClassResponse
      */
     public static ClassResponse from(String response) {
         GsonBuilder builder = new GsonBuilder();
