@@ -50,7 +50,7 @@ public class ParserResponse extends Response {
 
         /**
          * The token this lemma relates to
-         * @return
+         * @return Token
          */
         public Token getToken() {
             return token;
@@ -1160,7 +1160,7 @@ public class ParserResponse extends Response {
     /**
      * ParserResponse factory method
      * @param response The JSON response from MeaningCloud Parser API
-     * @return
+     * @return ParserResponse
      */
     public static ParserResponse from(String response) {
         GsonBuilder builder = new GsonBuilder();

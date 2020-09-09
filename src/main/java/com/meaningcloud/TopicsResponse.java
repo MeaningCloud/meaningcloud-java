@@ -411,7 +411,7 @@ public class TopicsResponse extends Response {
 
         /**
          * Identifier of the geographical information
-         * @return
+         * @return String
          */
         public String getId() {
             return id;

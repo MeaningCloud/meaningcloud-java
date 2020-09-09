@@ -99,7 +99,7 @@ public class LangResponse extends Response{
     /**
      * LangResponse factory method
      * @param response the JSON response from MeaningCloud Lang API
-     * @return
+     * @return LangResponse
      */
     public static LangResponse from(String response) {
         GsonBuilder builder = new GsonBuilder();

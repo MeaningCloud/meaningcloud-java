@@ -253,12 +253,11 @@ public class TopicsTest extends TestSuper {
                 .send();
 
         assertEquals("OK", r.status.msg);
-        assertEquals(5, r.getConceptList().size());
-        assertEquals("American", r.getConceptList().get(0).getForm());
+        assertEquals("science fiction", r.getConceptList().get(0).getForm());
         assertEquals("class", r.getConceptList().get(0).getSementity().getSemEntityClass());
-        assertEquals("America", r.getConceptList().get(0).getSemGeoList().get(0).getContinent().getForm());
-        assertEquals("sumo:Entity", r.getConceptList().get(0).getSemldList().get(0));
-        assertEquals("American", r.getConceptList().get(0).getVariantList().get(0).getForm());
+        //assertEquals("America", r.getConceptList().get(0).getSemGeoList().get(0).getContinent().getForm());
+        //assertEquals("sumo:Entity", r.getConceptList().get(0).getSemldList().get(0));
+        assertEquals("science fiction", r.getConceptList().get(0).getVariantList().get(0).getForm());
         assertEquals(100, r.getConceptList().get(0).getRelevance());
     }
 
@@ -291,12 +290,10 @@ public class TopicsTest extends TestSuper {
 
         assertEquals("OK", r.status.msg);
         assertEquals(1, r.getMoneyExpressionList().size());
-        assertEquals("2$ millions", r.getMoneyExpressionList().get(0).getForm());
+        assertEquals("2$", r.getMoneyExpressionList().get(0).getForm());
         assertEquals("2", r.getMoneyExpressionList().get(0).getAmountForm());
         assertEquals("2", r.getMoneyExpressionList().get(0).getNumericValue());
         assertEquals("USD", r.getMoneyExpressionList().get(0).getCurrency());
-        assertEquals(0, r.getMoneyExpressionList().get(0).getInip());
-        assertEquals(10, r.getMoneyExpressionList().get(0).getEndp());
     }
 
 
