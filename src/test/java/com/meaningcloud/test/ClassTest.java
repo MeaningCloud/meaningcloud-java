@@ -11,9 +11,10 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @RunWith(Throttling.class)
 public class ClassTest extends TestSuper {
@@ -34,8 +35,6 @@ public class ClassTest extends TestSuper {
      * 'IPTC_pt',
      * 'SocialMedia_en',
      * 'SocialMedia_es',
-     * 'IAB_en',
-     * 'IAB_es'
      */
 
 
@@ -48,7 +47,6 @@ public class ClassTest extends TestSuper {
         assertEquals("OK", r.status.msg);
         assertEquals("01005000", r.getCategoryList().get(0).getCode());
         assertEquals("arts, culture and entertainment - cinema", r.getCategoryList().get(0).getLabel());
-        assertEquals(0.30986246, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
     }
 
@@ -62,7 +60,6 @@ public class ClassTest extends TestSuper {
         assertEquals("OK", r.status.msg);
         assertEquals("04004000", r.getCategoryList().get(0).getCode());
         assertEquals("economía, negocios y finanzas - construcción e inmobiliaria", r.getCategoryList().get(0).getLabel());
-        assertEquals(2.1708984, r.getCategoryList().get(0).getAbsRelevance(),0.1);
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
     }
 
@@ -76,7 +73,6 @@ public class ClassTest extends TestSuper {
         assertEquals("OK", r.status.msg);
         assertEquals("15054000", r.getCategoryList().get(0).getCode());
         assertEquals("esport - futbol", r.getCategoryList().get(0).getLabel());
-        assertEquals(4.0622873, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
     }
 
@@ -90,7 +86,6 @@ public class ClassTest extends TestSuper {
         assertEquals("OK", r.status.msg);
         assertEquals("03010001", r.getCategoryList().get(0).getCode());
         assertEquals("Désastres et accidents - Accident de transport - Accident de la route", r.getCategoryList().get(0).getLabel());
-        assertEquals(1.1279346, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
     }
 
@@ -104,11 +99,9 @@ public class ClassTest extends TestSuper {
         assertEquals("OK", r.status.msg);
         assertEquals("03004000", r.getCategoryList().get(0).getCode());
         assertEquals("Disastri, Incidenti - Incendio", r.getCategoryList().get(0).getLabel());
-        assertEquals(0.64581525, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
         assertEquals("04001005", r.getCategoryList().get(1).getCode());
         assertEquals("Economia, affari e finanza - Agricoltura - Viticoltura", r.getCategoryList().get(1).getLabel());
-        assertEquals(0.33156806, r.getCategoryList().get(1).getAbsRelevance(), 0.1);
         assertEquals(51, r.getCategoryList().get(1).getRelevance(), 0);
     }
 
@@ -122,7 +115,6 @@ public class ClassTest extends TestSuper {
         assertEquals("OK", r.status.msg);
         assertEquals("01005000", r.getCategoryList().get(0).getCode());
         assertEquals("arte, cultura e espetáculos - cinema", r.getCategoryList().get(0).getLabel());
-        assertEquals(1.1455679, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
     }
 
@@ -136,11 +128,9 @@ public class ClassTest extends TestSuper {
         assertEquals("OK", r.status.msg);
         assertEquals("01", r.getCategoryList().get(0).getCode());
         assertEquals("art and culture", r.getCategoryList().get(0).getLabel());
-        assertEquals(16.825678, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
         assertEquals("05", r.getCategoryList().get(1).getCode());
         assertEquals("education", r.getCategoryList().get(1).getLabel());
-        assertEquals(13.941779, r.getCategoryList().get(1).getAbsRelevance(), 0.1);
         assertEquals(83, r.getCategoryList().get(1).getRelevance(), 0);
     }
 
@@ -154,11 +144,9 @@ public class ClassTest extends TestSuper {
         assertEquals("OK", r.status.msg);
         assertEquals("06", r.getCategoryList().get(0).getCode());
         assertEquals("medio ambiente, meteorología y energía", r.getCategoryList().get(0).getLabel());
-        assertEquals(14.654539, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
         assertEquals("12", r.getCategoryList().get(1).getCode());
         assertEquals("política", r.getCategoryList().get(1).getLabel());
-        assertEquals(11.541282, r.getCategoryList().get(1).getAbsRelevance(), 0.1);
         assertEquals(79, r.getCategoryList().get(1).getRelevance(), 0);
     }
 
@@ -172,11 +160,9 @@ public class ClassTest extends TestSuper {
         assertEquals("OK", r.status.msg);
         assertEquals("71", r.getCategoryList().get(0).getCode());
         assertEquals("Situación financiera - Potencial de crecimiento futuro", r.getCategoryList().get(0).getLabel());
-        assertEquals(2.984079, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
         assertEquals("73", r.getCategoryList().get(1).getCode());
         assertEquals("Situación financiera - Resultados financieros", r.getCategoryList().get(1).getLabel());
-        assertEquals(1.6437786, r.getCategoryList().get(1).getAbsRelevance(), 0.1);
         assertEquals(55, r.getCategoryList().get(1).getRelevance(), 0);
     }
 
@@ -190,44 +176,18 @@ public class ClassTest extends TestSuper {
         assertEquals("OK", r.status.msg);
         assertEquals("6912", r.getCategoryList().get(0).getCode());
         assertEquals("túnel* (ca) / túnel (es)", r.getCategoryList().get(0).getLabel());
-        assertEquals(16.0, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
         assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
         assertEquals("0914", r.getCategoryList().get(1).getCode());
         assertEquals("europa central i oriental* (ca) / europa central y oriental (es)", r.getCategoryList().get(1).getLabel());
-        assertEquals(10.0, r.getCategoryList().get(1).getAbsRelevance(), 0.1);
         assertEquals(63, r.getCategoryList().get(1).getRelevance(), 0);
     }
 
 
-    @Test
-    public void testBasicIAB_en() {
-        String response = "{\"status\":{\"code\":\"0\",\"msg\":\"OK\",\"credits\":\"1\"},\"category_list\":[{\"code\":\"Business\",\"label\":\"Business\",\"abs_relevance\":\"1\",\"relevance\":\"100\"}]}";
-
-        ClassResponse r = ClassResponse.from(response);
-
-        assertEquals("OK", r.status.msg);
-        assertEquals("Business", r.getCategoryList().get(0).getCode());
-        assertEquals("Business", r.getCategoryList().get(0).getLabel());
-        assertEquals(1, r.getCategoryList().get(0).getAbsRelevance(), 0);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
-    }
-
-
-    @Test
-    public void testBasicIAB_es() {
-        String response = "{\"status\":{\"code\":\"0\",\"msg\":\"OK\",\"credits\":\"1\"},\"category_list\":[{\"code\":\"Hobbies&Interests>BoardGamesPuzzles\",\"label\":\"Pasatiempos e intereses>Juegos de mesa\\/Puzles\",\"abs_relevance\":\"1\",\"relevance\":\"100\"},{\"code\":\"LawGovt&Politics>LegalIssues\",\"label\":\"Ley, gobierno y política>Asuntos legales\",\"abs_relevance\":\"1\",\"relevance\":\"100\"},{\"code\":\"Society\",\"label\":\"Sociedad\",\"abs_relevance\":\"1\",\"relevance\":\"100\"}]}";
-
-        ClassResponse r = ClassResponse.from(response);
-
-        assertEquals("OK", r.status.msg);
-        assertEquals("Hobbies&Interests>BoardGamesPuzzles", r.getCategoryList().get(0).getCode());
-        assertEquals("Pasatiempos e intereses>Juegos de mesa/Puzles", r.getCategoryList().get(0).getLabel());
-        assertEquals(1, r.getCategoryList().get(0).getAbsRelevance(), 0);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
-    }
-
-
     /***** test Class Request *****/
+
+    private Set<String> getCategories(ClassResponse r) {
+        return r.getCategoryList().stream().map(ClassResponse.Category::getCode).collect(Collectors.toSet());
+    }
 
 
     @Test @Throttle
@@ -238,15 +198,9 @@ public class ClassTest extends TestSuper {
                 .send();
 
         assertEquals("OK", r.status.msg);
-        assertEquals(2, r.getCategoryList().size());
-        assertEquals("01005000", r.getCategoryList().get(0).getCode());
-        assertEquals("arts, culture and entertainment - cinema", r.getCategoryList().get(0).getLabel());
-        assertEquals(0.4991148, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
-        assertEquals("01005001", r.getCategoryList().get(1).getCode());
-        assertEquals("arts, culture and entertainment - cinema - film festival", r.getCategoryList().get(1).getLabel());
-        assertEquals(0.32064292, r.getCategoryList().get(1).getAbsRelevance(), 0.1);
-        assertEquals(64, r.getCategoryList().get(1).getRelevance(), 0);
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("01005000"));
+        assertTrue(categories.contains("01005001"));
     }
 
 
@@ -258,15 +212,9 @@ public class ClassTest extends TestSuper {
                 .send();
 
         assertEquals("OK", r.status.msg);
-        assertEquals(7, r.getCategoryList().size());
-        assertEquals("01027000", r.getCategoryList().get(0).getCode());
-        assertEquals("arte, cultura y espectáculos - internet", r.getCategoryList().get(0).getLabel());
-        assertEquals(0.14134328, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
-        assertEquals("04003005", r.getCategoryList().get(1).getCode());
-        assertEquals("economía, negocios y finanzas - computación e informática - software", r.getCategoryList().get(1).getLabel());
-        assertEquals(0.11745432019233704, r.getCategoryList().get(1).getAbsRelevance(), 0.1);
-        assertEquals(85.0, r.getCategoryList().get(1).getRelevance(), 0);
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("01027000"));
+        assertTrue(categories.contains("04003005"));
     }
 
 
@@ -278,11 +226,8 @@ public class ClassTest extends TestSuper {
                 .send();
 
         assertEquals("OK", r.status.msg);
-        assertEquals(2, r.getCategoryList().size());
-        assertEquals("15008000", r.getCategoryList().get(0).getCode());
-        assertEquals("esport - bàsquet", r.getCategoryList().get(0).getLabel());
-        assertEquals(0.12710223, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("15008000"));
     }
 
 
@@ -295,10 +240,8 @@ public class ClassTest extends TestSuper {
 
         assertEquals("OK", r.status.msg);
         assertEquals(1, r.getCategoryList().size());
-        assertEquals("01025000", r.getCategoryList().get(0).getCode());
-        assertEquals("Arts, culture, et spectacles - Dessin animé", r.getCategoryList().get(0).getLabel());
-        assertEquals(0.9202491044998169, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("01025000"));
     }
 
 
@@ -311,10 +254,8 @@ public class ClassTest extends TestSuper {
 
         assertEquals("OK", r.status.msg);
         assertEquals(1, r.getCategoryList().size());
-        assertEquals("01009000", r.getCategoryList().get(0).getCode());
-        assertEquals("Arte, cultura, intrattenimento - Biblioteche, musei", r.getCategoryList().get(0).getLabel());
-        assertEquals(0.7656713, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("01009000"));
     }
 
 
@@ -330,11 +271,9 @@ public class ClassTest extends TestSuper {
                 .send();
 
         assertEquals("OK", r.status.msg);
-        assertEquals(1, r.getCategoryList().size());
-        assertEquals("11006000", r.getCategoryList().get(0).getCode());
-        assertEquals("política - governo", r.getCategoryList().get(0).getLabel());
-        assertEquals(0.23998912, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
+        assertEquals(2, r.getCategoryList().size());
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("11006000"));
     }
 
 
@@ -347,10 +286,8 @@ public class ClassTest extends TestSuper {
 
         assertEquals("OK", r.status.msg);
         assertEquals(1, r.getCategoryList().size());
-        assertEquals("71", r.getCategoryList().get(0).getCode());
-        assertEquals("Situación financiera - Potencial de crecimiento futuro", r.getCategoryList().get(0).getLabel());
-        assertEquals(0.57659626, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("71"));
     }
 
 
@@ -362,11 +299,9 @@ public class ClassTest extends TestSuper {
                 .send();
 
         assertEquals("OK", r.status.msg);
-        assertEquals(5, r.getCategoryList().size());
-        assertEquals("0821", r.getCategoryList().get(0).getCode());
-        assertEquals("empresa familiar* (ca) / empresa familiar (es)", r.getCategoryList().get(0).getLabel());
-        assertEquals(3.0, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
+        assertEquals(3, r.getCategoryList().size());
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("0821"));
     }
 
 
@@ -379,10 +314,8 @@ public class ClassTest extends TestSuper {
 
         assertEquals("OK", r.status.msg);
         assertEquals(1, r.getCategoryList().size());
-        assertEquals("04", r.getCategoryList().get(0).getCode());
-        assertEquals("economía y finanzas", r.getCategoryList().get(0).getLabel());
-        assertEquals(6.197353, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("04"));
     }
 
 
@@ -395,40 +328,8 @@ public class ClassTest extends TestSuper {
 
         assertEquals("OK", r.status.msg);
         assertEquals(1, r.getCategoryList().size());
-        assertEquals("02", r.getCategoryList().get(0).getCode());
-        assertEquals("crime, law and justice", r.getCategoryList().get(0).getLabel());
-        assertEquals(1.4297694, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
-    }
-
-
-    @Test @Throttle
-    public void testClassRequestIAB_en() throws IOException, Request.ParameterValidationException {
-        ClassResponse r = ClassRequest
-                .build(MEANINGCLOUD_KEY, "IAB_en")
-                .withText("At the beginning of every year, Terrie Simpson and her fellow estate agents at Agence Eleonor, off Place Gambetta in the pretty Dordogne town of Eymet, sit down to set their annual sales targets.")
-                .send();
-
-        assertEquals("OK", r.status.msg);
-        assertEquals("Business", r.getCategoryList().get(0).getCode());
-        assertEquals("Business", r.getCategoryList().get(0).getLabel());
-        assertEquals(1, r.getCategoryList().get(0).getAbsRelevance(), 0);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
-    }
-
-
-    @Test @Throttle
-    public void testClassRequestIAB_es() throws IOException, Request.ParameterValidationException {
-        ClassResponse r = ClassRequest
-                .build(MEANINGCLOUD_KEY, "IAB_es")
-                .withText("Defex, la empresa semipública de armamento que está siendo investigada por corrupción en la Audiencia Nacional, ha decidido dar un paso adelante y pedirle al juez que la considere perjudicada y la deje ejercer la acusación particular. Quiere acusar a los que fueron sus tres máximos directivos de haber montado un “complejo puzle delictivo” a espaldas del consejo de Administración para desviar “elevadas sumas de dinero”. El escándalo de pago de mordidas en países africanos y blanqueo de dinero en paraísos fiscales ha acabado con la compañía, que está en liquidación.")
-                .send();
-
-        assertEquals("OK", r.status.msg);
-        assertEquals("Hobbies&Interests>BoardGamesPuzzles", r.getCategoryList().get(0).getCode());
-        assertEquals("Pasatiempos e intereses>Juegos de mesa/Puzles", r.getCategoryList().get(0).getLabel());
-        assertEquals(1, r.getCategoryList().get(0).getAbsRelevance(), 0);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("02"));
     }
 
 
@@ -445,13 +346,9 @@ public class ClassTest extends TestSuper {
                 .send();
 
         assertEquals("OK", r.status.msg);
-        assertEquals(2, r.getCategoryList().size());
-        assertEquals("01005000", r.getCategoryList().get(0).getCode());
-        assertEquals("arts, culture and entertainment - cinema", r.getCategoryList().get(0).getLabel());
-        assertEquals(0.29636556, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
-        assertEquals("about", r.getCategoryList().get(0).getTermList().get(0).getForm());
-        assertEquals(0.1, r.getCategoryList().get(0).getTermList().get(0).getAbsRelevance(), 0.1);
+        assertEquals(3, r.getCategoryList().size());
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("01005000"));
     }
 
 
@@ -465,10 +362,8 @@ public class ClassTest extends TestSuper {
 
         assertEquals("OK", r.status.msg);
         assertEquals(1, r.getCategoryList().size());
-        assertEquals("02", r.getCategoryList().get(0).getCode());
-        assertEquals("crime, law and justice", r.getCategoryList().get(0).getLabel());
-        assertEquals(1.4297694, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("02"));
     }
 
 
@@ -482,10 +377,8 @@ public class ClassTest extends TestSuper {
 
         assertEquals("OK", r.status.msg);
         assertEquals(1, r.getCategoryList().size());
-        assertEquals("02", r.getCategoryList().get(0).getCode());
-        assertEquals("crime, law and justice", r.getCategoryList().get(0).getLabel());
-        assertEquals(1.4297694, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("02"));
     }
 
 
@@ -498,11 +391,9 @@ public class ClassTest extends TestSuper {
                 .send();
 
         assertEquals("OK", r.status.msg);
-        assertEquals(3, r.getCategoryList().size());
-        assertEquals("04017000", r.getCategoryList().get(0).getCode());
-        assertEquals("economía, negocios y finanzas - economía (general)", r.getCategoryList().get(0).getLabel());
-        assertEquals(0.061752953, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
+        assertEquals(1, r.getCategoryList().size());
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("04017000"));
     }
 
 
@@ -515,21 +406,17 @@ public class ClassTest extends TestSuper {
                 .withFile(file)
                 .send();
 
+
         assertEquals("OK", r.status.msg);
         assertEquals(2, r.getCategoryList().size());
-        assertEquals("01005000", r.getCategoryList().get(0).getCode());
-        assertEquals("arts, culture and entertainment - cinema", r.getCategoryList().get(0).getLabel());
-        assertEquals(0.4991148, r.getCategoryList().get(0).getAbsRelevance(), 0.1);
-        assertEquals(100, r.getCategoryList().get(0).getRelevance(), 0);
-        assertEquals("01005001", r.getCategoryList().get(1).getCode());
-        assertEquals("arts, culture and entertainment - cinema - film festival", r.getCategoryList().get(1).getLabel());
-        assertEquals(0.32064292, r.getCategoryList().get(1).getAbsRelevance(), 0.1);
-        assertEquals(64, r.getCategoryList().get(1).getRelevance(), 0);
+        Set<String> categories = getCategories(r);
+        assertTrue(categories.contains("01005000"));
+        assertTrue(categories.contains("01005001"));
     }
 
 
     @Test @Throttle
-    public void testTopicsRequestWhitURL() throws IOException, Request.ParameterValidationException {
+    public void testClassRequestWhitURL() throws IOException, Request.ParameterValidationException {
         URL url = new URL("https://www.nytimes.com/2018/01/25/science/plastic-coral-reefs.html?partner=rss&emc=rss");
         ClassResponse r = ClassRequest
                 .build(MEANINGCLOUD_KEY, "IPTC_en")
@@ -539,4 +426,18 @@ public class ClassTest extends TestSuper {
         assertEquals("OK", r.status.msg);
         assertNotNull(r.getCategoryList().get(0).getCode());
     }
+
+    /**
+     * IAB is not a Class model anymore, but a Deep Categorization one.
+     */
+    @Test @Throttle
+    public void testIABNotAvailableInClass20() throws IOException, Request.ParameterValidationException {
+        ClassResponse r = ClassRequest
+                .build(MEANINGCLOUD_KEY, "IAB_en")
+                .withText("Hello, world!")
+                .send();
+
+        assertEquals("Resource not supported", r.status.msg);
+    }
+
 }

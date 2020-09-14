@@ -19,6 +19,26 @@ public class ClassRequest extends Request{
     public static final boolean DEFAULT_VERBOSE = false;
     public static final String DEFAULT_CATEGORIES_FILTER = "";
     public static final Payload DEFAULT_PAYLOAD = new NoPayload();
+    public static final HierarchyExpansion DEFAULT_HIERARCHY_EXPANSION = HierarchyExpansion.NO_EXPANSION;
+
+    /**
+     * Allowed values for Hierarchy Expansion
+     */
+    public static enum HierarchyExpansion {
+        NO_EXPANSION("n"),
+        ONLY_PARENTS("p"),
+        ALL_ANCESTORS("a");
+
+        private String expansion;
+
+        HierarchyExpansion(String expansion) {
+            this.expansion = expansion;
+        }
+
+        public String getValue() {
+            return expansion;
+        }
+    }
 
     /**
      * Interface to obtain parameters
@@ -132,7 +152,8 @@ public class ClassRequest extends Request{
 
     public final String model;
     public final boolean verbose;
-    public final String categories_filter;
+    public final String categoriesFilter;
+    public final HierarchyExpansion expandHierarchy;
     public final Payload payload;
 
     /**
@@ -146,7 +167,8 @@ public class ClassRequest extends Request{
         params.put("src", "mc-java");
         params.put("model", model);
         params.put("verbose", verbose ? "y" : "n");
-        params.put("categories_filter", categories_filter);
+        params.put("categories_filter", categoriesFilter);
+        params.put("expand_hierarchy", expandHierarchy.getValue());
 
         for (Map.Entry<String, String> x : payload.getParams().entrySet()) {
             params.put(x.getKey(), x.getValue());
@@ -179,7 +201,8 @@ public class ClassRequest extends Request{
      * @param key User's API key
      * @param model Classification model to use
      * @param verbose It shows additional information about the classification
-     * @param categories_filter List of prefixes of the code of the categories to which the classification is limited
+     * @param categoriesFilter List of prefixes of the code of the categories to which the classification is limited
+     * @param expandHierarchy Hierarchy Expansion strategy.
      * @param payload Interface to obtain parameters
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
@@ -187,12 +210,14 @@ public class ClassRequest extends Request{
                           String key,
                           String model,
                           boolean verbose,
-                          String categories_filter,
+                          String categoriesFilter,
+                          HierarchyExpansion expandHierarchy,
                           Payload payload) throws ParameterValidationException {
         super(transport, key);
         this.model = model;
         this.verbose = verbose;
-        this.categories_filter = categories_filter;
+        this.categoriesFilter = categoriesFilter;
+        this.expandHierarchy = expandHierarchy;
         this.payload = payload;
     }
 
@@ -204,7 +229,7 @@ public class ClassRequest extends Request{
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public static ClassRequest build(String key, String model) throws ParameterValidationException {
-        return new ClassRequest(DEFAULT_TRANSPORT, key, model, DEFAULT_VERBOSE, DEFAULT_CATEGORIES_FILTER, DEFAULT_PAYLOAD);
+        return new ClassRequest(DEFAULT_TRANSPORT, key, model, DEFAULT_VERBOSE, DEFAULT_CATEGORIES_FILTER, DEFAULT_HIERARCHY_EXPANSION, DEFAULT_PAYLOAD);
     }
 
     /**
@@ -215,7 +240,7 @@ public class ClassRequest extends Request{
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public static ClassRequest build(Transport transport, String key, String model) throws ParameterValidationException {
-        return new ClassRequest(transport, key, model, DEFAULT_VERBOSE, DEFAULT_CATEGORIES_FILTER, DEFAULT_PAYLOAD);
+        return new ClassRequest(transport, key, model, DEFAULT_VERBOSE, DEFAULT_CATEGORIES_FILTER, DEFAULT_HIERARCHY_EXPANSION, DEFAULT_PAYLOAD);
     }
 
     /**
@@ -225,7 +250,7 @@ public class ClassRequest extends Request{
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ClassRequest withText(String txt) throws ParameterValidationException {
-        return new ClassRequest(transport, key, model, verbose, categories_filter, new TextPayload(txt));
+        return new ClassRequest(transport, key, model, verbose, categoriesFilter, expandHierarchy, new TextPayload(txt));
     }
 
     /**
@@ -236,7 +261,7 @@ public class ClassRequest extends Request{
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ClassRequest withFile(File file) throws IOException, ParameterValidationException {
-        return new ClassRequest(transport, key, model, verbose, categories_filter, new FilePayload(file));
+        return new ClassRequest(transport, key, model, verbose, categoriesFilter, expandHierarchy, new FilePayload(file));
     }
 
     /**
@@ -246,7 +271,7 @@ public class ClassRequest extends Request{
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ClassRequest withURL(URL url) throws ParameterValidationException {
-        return new ClassRequest(transport, key, model, verbose, categories_filter, new URLPayload(url.toString()));
+        return new ClassRequest(transport, key, model, verbose, categoriesFilter, expandHierarchy, new URLPayload(url.toString()));
     }
 
     /**
@@ -256,7 +281,7 @@ public class ClassRequest extends Request{
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ClassRequest withVerbose(boolean verbose) throws ParameterValidationException {
-        return new ClassRequest(transport, key, model, verbose, categories_filter, payload);
+        return new ClassRequest(transport, key, model, verbose, categoriesFilter, expandHierarchy, payload);
     }
 
     /**
@@ -266,6 +291,6 @@ public class ClassRequest extends Request{
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public ClassRequest withCategoryFilter(String category) throws ParameterValidationException {
-        return new ClassRequest(transport, key, model, verbose, category, payload);
+        return new ClassRequest(transport, key, model, verbose, category, expandHierarchy, payload);
     }
 }
