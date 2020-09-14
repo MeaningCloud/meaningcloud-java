@@ -17,6 +17,9 @@ public class JClient {
         }
     }
 
+    /*
+     *
+     */
     public static String exampleLangRequest (String txt) throws IOException {
         LangResponse r = LangRequest
                 .build(MEANINGCLOUD_KEY)
@@ -32,6 +35,9 @@ public class JClient {
         return language;
     }
 
+    /*
+     *
+     */
     public static void exampleTopicsRequest (String txt, Request.Language lang) throws IOException, Request.ParameterValidationException {
         TopicsResponse r = TopicsRequest
                 .build(MEANINGCLOUD_KEY, lang)
@@ -51,6 +57,9 @@ public class JClient {
         }
     }
 
+    /*
+     *
+     */
     public static void exampleParserRequest (String txt, Request.Language lang) throws IOException, Request.ParameterValidationException {
         ParserResponse r = ParserRequest
                 .build(MEANINGCLOUD_KEY, lang)
@@ -64,19 +73,33 @@ public class JClient {
         }
     }
 
-    public static void main(String[] args) throws IOException, Request.ParameterValidationException {
-        String txt = "London is a very nice city but I also love Madrid.";
-        String lang = exampleLangRequest(txt);
+    /*
+     *
+     */
+    public static void exampleClassRequest (String txt, String model) throws IOException, Request.ParameterValidationException {
+        ClassResponse r = ClassRequest
+                .build(MEANINGCLOUD_KEY, model)
+                .withText(txt)
+                .send();
+        List<ClassResponse.Category> categories = r.getCategoryList();
 
-        if (lang.matches("auto")  || lang.matches("en") || lang.matches("es") || lang.matches("fr") || lang.matches("it") || lang.matches("pt") || lang.matches("ca")){
-            Request.Language language = Request.Language.valueOf(lang.toUpperCase());
-
-            exampleTopicsRequest(txt, language);
-            exampleParserRequest(txt, language);
-
-        } else {
-            System.out.println("The language is not valid");
+        for (ClassResponse.Category category : categories) {
+            System.out.println("Category:  " + category.getLabel());
         }
+    }
 
+    /*
+     *
+     */
+    public static void main(String[] args) throws IOException, Request.ParameterValidationException {
+        // Text taken from https://www.genome.gov/genetics-glossary/Mitochondria
+        String txt = "Mitochondria are membrane-bound cell organelles (mitochondrion, singular) " +
+                "that generate most of the chemical energy needed to power the cell's biochemical reactions. " +
+                "Chemical energy produced by the mitochondria is stored in a small molecule called adenosine " +
+                "triphosphate (ATP)";
+        exampleLangRequest(txt);
+        exampleTopicsRequest(txt, Request.Language.EN);
+        exampleParserRequest(txt, Request.Language.EN);
+        exampleClassRequest(txt, "IPTC_en");
     }
 }

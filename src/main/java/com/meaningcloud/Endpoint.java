@@ -34,14 +34,14 @@ public class Endpoint {
      * The list of available services.
      */
     public enum Service {
-        CLASS_1_1("class-1.1"),
+        CLASS_2_0("class-2.0"),
         DEEP_CATEGORIZATION_1_0("deepcategorization-1.0"),
         LANG_2_0("lang-2.0"),
         PARSER_2_0("parser-2.0"),
         SENTIMENT_2_1("sentiment-2.1"),
         TOPICS_2_0("topics-2.0"),
 
-        CLASS(CLASS_1_1),
+        CLASS(CLASS_2_0),
         DEEP_CATEGORIZATION(DEEP_CATEGORIZATION_1_0),
         LANG(LANG_2_0),
         PARSER(PARSER_2_0),
