@@ -14,6 +14,6 @@ jobs:
         #run: ls
         shell: sh
         working-directory: .
-        run: docker
+        #run: docker
         #run: pwd && ls && ls src
-        #run: docker build -t meaningcloud_java_sdk_tests -f docker/Dockerfile . && echo "correct"
+        run: docker build -t meaningcloud_java_sdk_tests -f docker/Dockerfile . && echo "correct"
