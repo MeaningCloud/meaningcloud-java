@@ -25,7 +25,13 @@ jobs:
         uses: actions/upload-artifact@v2-preview
         with:
           name: 'test-report'
-          path: tmp/xml/*.html
+          path: tmp/html/*.html
+      - uses: check-run-reporter/action@v2.0.0
+        # always run, otherwise you'll only see results for passing builds
+        if: ${{ always() }}
+        with:
+          token: ${{ ssecrets.TESTS_TOKEN }}
+          report: 'tmp/xml/*.xml'
       #- name: Publish Test Results
       #  uses: EnricoMi/publish-unit-test-result-action@v1.1
       #  if: always()
