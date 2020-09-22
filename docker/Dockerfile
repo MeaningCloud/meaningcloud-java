@@ -20,7 +20,7 @@ WORKDIR /tmp
 
 #RUN gradle clean
 
-CMD gradle clean test -DMEANINGCLOUD_KEY=0df215e6029d01b5e96def02552b375c
+CMD gradle clean test -DMEANINGCLOUD_KEY=111
 #RUN ./gradlew tasks
 #CMD ./gradlew clean test -DMEANINGCLOUD_KEY=0df215e6029d01b5e96def02552b375c
 
