@@ -3,10 +3,10 @@ name: Meaningcloud Java SDK tests
 on: [push]
 
 jobs:
-  build:
+  build-image:
 
     runs-on: ubuntu-latest
 
     steps:
-      - name: Hello world
-        run: echo "Hello world"
+      - name: Build docker tests image
+        run: docker build -t meaningcloud_java_sdk_tests -f docker/Dockerfile . && echo "correct"
