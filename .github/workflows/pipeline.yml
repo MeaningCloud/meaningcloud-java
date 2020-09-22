@@ -17,4 +17,4 @@ jobs:
       - name: Running docker image
         env:
           DMEANINGCLOUD_KEY: ${{ secrets.DMEANINGCLOUD_KEY }}
-        run: echo $DMEANINGCLOUD_KEY #&& docker run -e DMEANINGCLOUD_KEY meaningcloud_java_sdk_tests
+        run: docker run -e DMEANINGCLOUD_KEY meaningcloud_java_sdk_tests
