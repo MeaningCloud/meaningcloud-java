@@ -11,11 +11,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Build docker tests image
-        #run: ls
         shell: sh
         working-directory: .
-        #run: docker
-        #run: pwd && ls && ls src
         run: docker build -t meaningcloud_java_sdk_tests -f docker/Dockerfile .
       - name: Running docker image
-        run: docker run -e DMEANINGCLOUD_KEY meaningcloud_java_sdk_tests
+        run: echo $DMEANINGCLOUD_KEY #&& docker run -e DMEANINGCLOUD_KEY meaningcloud_java_sdk_tests
