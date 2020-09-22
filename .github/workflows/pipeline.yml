@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout github-actions-for-tests
-        uses: actions/checkout@github-actions-for-tests
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Build docker tests image
         #run: ls
         shell: sh
