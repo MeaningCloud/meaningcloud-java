@@ -10,5 +10,7 @@ jobs:
     steps:
       - name: Build docker tests image
         #run: ls
-        run: pwd && ls src
+        shell: sh
+        working-directory: .
+        run: pwd && ls && ls src
         #run: docker build -t meaningcloud_java_sdk_tests -f docker/Dockerfile . && echo "correct"
