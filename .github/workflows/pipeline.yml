@@ -20,10 +20,16 @@ jobs:
         run: docker run -e DMEANINGCLOUD_KEY meaningcloud_java_sdk_tests
       - name: Getting reports from docker container
         run: DOCKER_ID=$(docker ps -a | grep 'java_sdk_tests' | awk '{ print $1 }') && docker cp $DOCKER_ID:/tmp . && ls
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1.1
+      - name: 'Publish Test Report'
         if: always()
+        uses: actions/upload-artifact@v2-preview
         with:
-          github_token: ${{ secrets.TESTS_TOKEN }}
-          check_name: Meaningcloud JAVA SDK Test Results
-          files: tmp/xml/*.xml
+          name: 'test-report'
+          path: tmp/xml/*.xml
+      #- name: Publish Test Results
+      #  uses: EnricoMi/publish-unit-test-result-action@v1.1
+      #  if: always()
+      #  with:
+      #    github_token: ${{ secrets.TESTS_TOKEN }}
+      #    check_name: Meaningcloud JAVA SDK Test Results
+      #    files: tmp/xml/*.xml
