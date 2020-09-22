@@ -1,0 +1,12 @@
+name: Meaningcloud Java SDK tests
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Hello world
+        run: echo "Hello world"
