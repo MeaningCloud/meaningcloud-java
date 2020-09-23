@@ -30,6 +30,7 @@ jobs:
         run: mkdir test-dashboard && git clone https://github.com/MeaningCloud/test-dashboard.git
       - name: 'Add report and commit to dashboard'
         run: | 
+          cd test-dashboard
           touch hello.txt
           ls
           git add . 
