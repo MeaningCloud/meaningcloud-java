@@ -38,8 +38,8 @@ jobs:
           git commit -m "Pushing new test report" 
       - name: Push changes
         uses: ad-m/github-push-action@master
-        repository: 'github.com/MeaningCloud/test-dashboard.git'
         with:
           github_token: ${{ secrets.TESTS_TOKEN }}
+          repository: 'github.com/MeaningCloud/test-dashboard.git'
         
    
