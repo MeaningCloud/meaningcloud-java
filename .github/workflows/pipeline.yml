@@ -31,7 +31,7 @@ jobs:
       - name: 'Add report, commit and push it to test dashboard'
         run: | 
           cd test-dashboard
-          mv tmp/html test-dashboard/tmp
+          mv /tmp/html test-dashboard/tmp
           git add .
           git config --global user.email "saninazer@gmail.com"
           git config --global user.name "Gasan Nazer"
