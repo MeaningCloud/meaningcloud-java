@@ -40,6 +40,6 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.TESTS_TOKEN }}
-          repository: 'github.com/MeaningCloud/test-dashboard.git'
+          repository: 'MeaningCloud/test-dashboard'
         
    
