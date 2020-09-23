@@ -27,5 +27,5 @@ jobs:
           name: 'test-report'
           path: tmp/html/*
       - name: 'Publish Test Results to Test Dashboard'
-        run: mkdir test-dashboard && cd test-dashboard && git clone https://github.com/MeaningCloud/test-dashboard.git && ls
+        run: mkdir test-dashboard && git clone https://github.com/MeaningCloud/test-dashboard.git && cd test-dashboard && ls
    
