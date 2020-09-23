@@ -8,31 +8,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-     # - name: Checkout repository
-     #   uses: actions/checkout@v2
-     # - name: Build docker tests image
-     #   shell: sh
-     #   working-directory: .
-     #   run: docker build -t meaningcloud_java_sdk_tests -f docker/Dockerfile .
-     # - name: Running docker image
-     #   env:
-     #     DMEANINGCLOUD_KEY: ${{ secrets.DMEANINGCLOUD_KEY }}
-     #   run: docker run -e DMEANINGCLOUD_KEY meaningcloud_java_sdk_tests
-     # - name: Getting reports from docker container
-     #   run: DOCKER_ID=$(docker ps -a | grep 'java_sdk_tests' | awk '{ print $1 }') && docker cp $DOCKER_ID:/tmp . && ls
-     # - name: 'Publish Test Report'
-     #   if: always()
-     #   uses: actions/upload-artifact@v2-preview
-     #   with:
-     #     name: 'test-report'
-     #     path: tmp/html/*
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Build docker tests image
+        shell: sh
+        working-directory: .
+        run: docker build -t meaningcloud_java_sdk_tests -f docker/Dockerfile .
+      - name: Running docker image
+        env:
+          DMEANINGCLOUD_KEY: ${{ secrets.DMEANINGCLOUD_KEY }}
+        run: docker run -e DMEANINGCLOUD_KEY meaningcloud_java_sdk_tests
+      - name: Getting reports from docker container
+        run: DOCKER_ID=$(docker ps -a | grep 'java_sdk_tests' | awk '{ print $1 }') && docker cp $DOCKER_ID:/tmp . && ls
+      - name: 'Publish Test Report'
+        if: always()
+        uses: actions/upload-artifact@v2-preview
+        with:
+          name: 'test-report'
+          path: tmp/html/*
       - name: 'Clone Test Dashboard'
         run: mkdir test-dashboard && git clone https://github.com/MeaningCloud/test-dashboard.git
-      - name: 'Add report and commit and push to test dashboard'
+      - name: 'Add report, commit and push it to test dashboard'
         run: | 
           cd test-dashboard
-          touch hello_2.txt
-          ls
+          mv tmp/html test-dashboard/tmp
           git add .
           git config --global user.email "saninazer@gmail.com"
           git config --global user.name "Gasan Nazer"
