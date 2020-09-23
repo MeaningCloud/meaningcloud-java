@@ -29,8 +29,9 @@ jobs:
       - name: 'Clone Test Dashboard'
         run: mkdir test-dashboard && git clone https://github.com/MeaningCloud/test-dashboard.git
       - name: 'Add report, commit and push it to test dashboard'
-        run: | 
-          mv tmp/html test-dashboard/tmp
+        run: |
+          REPORT_TIME=$(date +"report-%H:%M-%d-%m-%Y") 
+          mv tmp/html test-dashboard/reports/$REPORT_TIME
           cd test-dashboard
           git add .
           git config --global user.email "saninazer@gmail.com"
