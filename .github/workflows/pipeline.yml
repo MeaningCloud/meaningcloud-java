@@ -26,17 +26,6 @@ jobs:
         with:
           name: 'test-report'
           path: tmp/html/*
-      #- name: Run tests checker 
-      #  uses: check-run-reporter/action@v2.0.0
-      #  # always run, otherwise you'll only see results for passing builds
-      #  if: ${{ always() }}
-      #  with:
-      #    token: ${{ secrets.GITHUB_TOKEN }}
-      #    report: 'tmp/xml/*.xml'
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1.1
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          check_name: Meaningcloud JAVA SDK Test Results
-          files: tmp/xml/*.xml
+      - name: 'Publish Test Results to Test Dashboard'
+        run: mkdir test-dashboard && cd test-dashboard && git clone https://github.com/MeaningCloud/test-dashboard.git && ls
+   
