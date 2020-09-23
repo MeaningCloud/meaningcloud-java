@@ -34,6 +34,8 @@ jobs:
           touch hello.txt
           ls
           git add .
+          git config --global user.email "saninazer@gmail.com"
+          git config --global user.name "Gasan Nazer"
           git commit -m "Pushing new test report" 
       - name: Push changes
         uses: ad-m/github-push-action@master
