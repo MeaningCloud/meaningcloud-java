@@ -26,6 +26,20 @@ jobs:
         with:
           name: 'test-report'
           path: tmp/html/*
-      - name: 'Publish Test Results to Test Dashboard'
-        run: mkdir test-dashboard && git clone https://github.com/MeaningCloud/test-dashboard.git && cd test-dashboard && ls
+      - name: 'Clone Test Dashboard'
+        run: mkdir test-dashboard && git clone https://github.com/MeaningCloud/test-dashboard.git
+      - name: 'Add report and commit to dashboard'
+        run: |
+          mv tmp/html test-dashboard/tmp 
+          ls
+          git add . 
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Pushing new test report" 
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        repository: 'github.com/MeaningCloud/test-dashboard.git'
+        with:
+          github_token: ${{ secrets.TESTS_TOKEN }}
+        
    
