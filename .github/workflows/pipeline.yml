@@ -25,7 +25,7 @@ jobs:
         uses: actions/upload-artifact@v2-preview
         with:
           name: 'test-report'
-          path: tmp/html/*.html
+          path: tmp/html/*
       #- name: Run tests checker 
       #  uses: check-run-reporter/action@v2.0.0
       #  # always run, otherwise you'll only see results for passing builds
