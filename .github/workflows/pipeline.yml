@@ -37,6 +37,6 @@ jobs:
           git config --global user.email "saninazer@gmail.com"
           git config --global user.name "Gasan Nazer"
           git commit -m "Pushing new test report" 
-          git push https://${{ secrets.TESTS_TOKEN }}/MeaningCloud/test-dashboard.git
+          git push https://${{ secrets.TESTS_TOKEN }}@github.com/MeaningCloud/test-dashboard.git
         
    
