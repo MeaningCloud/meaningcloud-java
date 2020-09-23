@@ -28,19 +28,15 @@ jobs:
      #     path: tmp/html/*
       - name: 'Clone Test Dashboard'
         run: mkdir test-dashboard && git clone https://github.com/MeaningCloud/test-dashboard.git
-      - name: 'Add report and commit to dashboard'
+      - name: 'Add report and commit and push to test dashboard'
         run: | 
           cd test-dashboard
-          touch hello.txt
+          touch hello_2.txt
           ls
           git add .
           git config --global user.email "saninazer@gmail.com"
           git config --global user.name "Gasan Nazer"
           git commit -m "Pushing new test report" 
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.TESTS_TOKEN }}
-          repository: 'MeaningCloud/test-dashboard'
+          git push https://${{ secrets.TESTS_TOKEN }}/MeaningCloud/test-dashboard.git
         
    
