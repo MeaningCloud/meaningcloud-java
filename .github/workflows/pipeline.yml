@@ -8,54 +8,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-     # - name: Checkout repository
-     #   uses: actions/checkout@v2
-     # - name: Build docker tests image
-     #   shell: sh
-     #   working-directory: .
-     #   run: docker build -t meaningcloud_java_sdk_tests -f docker/Dockerfile .
-     # - name: Running docker image
-     #   env:
-     #     DMEANINGCLOUD_KEY: ${{ secrets.DMEANINGCLOUD_KEY }}
-     #   run: docker run -e DMEANINGCLOUD_KEY meaningcloud_java_sdk_tests
-     # - name: Getting reports from docker container
-     #   run: DOCKER_ID=$(docker ps -a | grep 'java_sdk_tests' | awk '{ print $1 }') && docker cp $DOCKER_ID:/tmp . && ls
-     # - name: 'Publish Test Report'
-     #   if: always()
-     #   uses: actions/upload-artifact@v2-preview
-     #   with:
-     #     name: 'test-report'
-     #     path: tmp/html/*
-     # - name: 'Clone Test Dashboard'
-     #   run: mkdir test-dashboard && git clone https://github.com/MeaningCloud/test-dashboard.git
-     # - name: 'Add report, commit and push it to test dashboard'
-     #   run: |
-     #     REPORT_TIME=$(date +"report-%H:%M-%d-%m-%Y") 
-     #     mv tmp/html test-dashboard/reports/$REPORT_TIME
-     #     cd test-dashboard
-     #     git add .
-     #     git config --global user.email ${{secrets.TESTS_EMAIL}}
-     #     git config --global user.name ${{secrets.TESTS_NAME}}
-     #     git commit -m "Pushing new test report" 
-     #     git push https://${{ secrets.TESTS_TOKEN }}@github.com/MeaningCloud/test-dashboard.git
-     # - name: Send mail
-     #  uses: dawidd6/action-send-mail@v2
-     #  with:
-     #   server_address: smtp.gmail.com
-     #   server_port: 465
-     #   username: ${{secrets.MAIL_USERNAME}}
-     #   password: ${{secrets.MAIL_PASSWORD}}
-     #   subject: Github Actions job result
-     #   # Literal body:
-     #   body: Build job of ${{github.repository}} completed successfully!
-     #   # Read file contents as body:
-     #   #body: file://README.md
-     #   to: gnazer@meaningcloud.com
-     #   from: Luke Skywalker # <user@example.com>
-     - name: 'REPLACE TEST'
-       run: |
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Build docker tests image
+        shell: sh
+        working-directory: .
+        run: docker build -t meaningcloud_java_sdk_tests -f docker/Dockerfile .
+      - name: Running docker image
+        env:
+          DMEANINGCLOUD_KEY: ${{ secrets.DMEANINGCLOUD_KEY }}
+        run: docker run -e DMEANINGCLOUD_KEY meaningcloud_java_sdk_tests
+      - name: Getting reports from docker container
+        run: DOCKER_ID=$(docker ps -a | grep 'java_sdk_tests' | awk '{ print $1 }') && docker cp $DOCKER_ID:/tmp . && ls
+      - name: 'Publish Test Report'
+        if: always()
+        uses: actions/upload-artifact@v2-preview
+        with:
+          name: 'test-report'
+          path: tmp/html/*
+      - name: 'Clone Test Dashboard'
+        run: mkdir test-dashboard && git clone https://github.com/MeaningCloud/test-dashboard.git
+      - name: 'Add report, commit and push it to test dashboard'
+        run: |
           REPORT_TIME=$(date +"report-%H:%M-%d-%m-%Y")
           REPLACE="%3A"
           URL=${REPORT_TIME//:/$REPLACE}
-          echo $URL
+          COMPLETE_URL=https://meaningcloud.github.io/test-dashboard/reports/$URL/index.html
+          echo $COMPLETE_URL
+          mv tmp/html test-dashboard/reports/$REPORT_TIME
+          cd test-dashboard
+          git add .
+          git config --global user.email ${{secrets.TESTS_EMAIL}}
+          git config --global user.name ${{secrets.TESTS_NAME}}
+          git commit -m "Pushing new test report" 
+          git push https://${{ secrets.TESTS_TOKEN }}@github.com/MeaningCloud/test-dashboard.git
+      - name: Send mail
+        uses: dawidd6/action-send-mail@v2
+        with:
+         server_address: smtp.gmail.com
+         server_port: 465
+         username: ${{secrets.MAIL_USERNAME}}
+         password: ${{secrets.MAIL_PASSWORD}}
+         subject: Github Actions job result(MeaningCloud JAVA SDK CI)
+         body: Tests of ${{github.repository}} completed successfully! <br>You can see the test report at $COMPLETE_URL <br>And the test dashboard at https://meaningcloud.github.io/test-dashboard
+         to: gnazer@meaningcloud.com
+         from: GitHub MeaningCloud JAVA SDK CI
       
