@@ -33,7 +33,8 @@ jobs:
           REPORT_TIME=$(date +"report-%H:%M-%d-%m-%Y")
           REPLACE="%3A"
           URL=${REPORT_TIME//:/$REPLACE}
-          export COMPLETE_URL=https://meaningcloud.github.io/test-dashboard/reports/$URL/index.html
+          COMPLETE_URL=https://meaningcloud.github.io/test-dashboard/reports/$URL/index.html
+          echo "::set-env name=COMPLETE_URL::$COMPLETE_URL"
           echo $COMPLETE_URL
           mv tmp/html test-dashboard/reports/$REPORT_TIME
           cd test-dashboard
@@ -44,18 +45,16 @@ jobs:
           git push https://${{ secrets.TESTS_TOKEN }}@github.com/MeaningCloud/test-dashboard.git
       - name: Send mail
         uses: dawidd6/action-send-mail@v2
-        env:
-          COMPLETE_URL: $COMPLETE_URL
         with:
          server_address: smtp.gmail.com
          server_port: 465
          username: ${{secrets.MAIL_USERNAME}}
          password: ${{secrets.MAIL_PASSWORD}}
          subject: Github Actions job result(MeaningCloud JAVA SDK CI)
-         body: Tests of ${{github.repository}} completed successfully! <br>You can see the test report at $COMPLETE_URL <br>And the test dashboard at https://meaningcloud.github.io/test-dashboard
+         body: Tests of ${{github.repository}} completed successfully! <br>You can see the test report at ${{env.COMPLETE_URL}} <br>And the test dashboard at https://meaningcloud.github.io/test-dashboard
          content_type: text/html
          to: gnazer@meaningcloud.com
          from: GitHub MeaningCloud JAVA SDK CI
       - name: Chech env variable
-        run: echo $COMPLETE_URL
+        run: echo ${{env.COMPLETE_URL}}
       
