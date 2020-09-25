@@ -55,6 +55,14 @@ jobs:
          content_type: text/html
          to: gnazer@meaningcloud.com
          from: GitHub MeaningCloud JAVA SDK CI
-      - name: Chech env variable
-        run: echo ${{env.COMPLETE_URL}}
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_CHANNEL: dev
+          SLACK_COLOR: '#3278BD'
+          SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_MESSAGE: 'Post Content Meaningcloud JAVA SDK tests executed. Report in ${{env.COMPLETE_URL}}'
+          SLACK_TITLE: Meaningcloud JAVA SDK tests
+          SLACK_USERNAME: rtCamp
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
       
