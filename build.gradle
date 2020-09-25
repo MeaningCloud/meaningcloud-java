@@ -95,4 +95,6 @@ test {
         }
         systemProperty "MEANINGCLOUD_KEY", key
     }
+    reports.html.destination = file("./html")
+    reports.junitXml.destination = file("./xml")
 }
