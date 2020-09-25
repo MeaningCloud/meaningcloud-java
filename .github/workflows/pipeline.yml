@@ -53,7 +53,7 @@ jobs:
          subject: Github Actions job result(MeaningCloud JAVA SDK CI)
          body: Tests of ${{github.repository}} completed successfully! <br>You can see the test report at ${{env.COMPLETE_URL}} <br>And the test dashboard at https://meaningcloud.github.io/test-dashboard
          content_type: text/html
-         to: notifications-pfizer@meaningcloud.com
+         to: dmunoz@meaningcloud.com 
          from: GitHub MeaningCloud JAVA SDK CI
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@master
