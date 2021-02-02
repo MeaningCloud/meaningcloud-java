@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Create a response to Text Classification
- * You can find more information at https://www.meaningcloud.com/developer/text-classification/doc/1.1/response
+ * You can find more information at https://www.meaningcloud.com/developer/text-classification/doc/2.0/response
  */
 public class ClassResponse extends Response {
 

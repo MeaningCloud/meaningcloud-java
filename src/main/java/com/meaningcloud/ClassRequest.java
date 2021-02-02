@@ -9,7 +9,7 @@ import java.util.*;
 
 /**
  * Represents a Text Classification request
- * You can find more information at https://www.meaningcloud.com/developer/text-classification/doc/1.1/request
+ * You can find more information at https://www.meaningcloud.com/developer/text-classification/doc/2.0/request
  */
 
 public class ClassRequest extends Request{
