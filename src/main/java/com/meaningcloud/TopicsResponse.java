@@ -30,6 +30,8 @@ public class TopicsResponse extends Response {
         private List<Theme> semThemeList;
         @SerializedName("variant_list")
         private List<Variant> variantList;
+        @SerializedName("standard_list")
+        private List<StandardGeoInfo> standardList;
         private int inip;
         private int endp;
 
@@ -107,6 +109,15 @@ public class TopicsResponse extends Response {
          */
         public List<Variant> getVariantList() {
             return list(variantList);
+        }
+
+        /**
+         * ISO standards which specify short codes for the names of countries
+         * @return ISO standards which specify short codes
+         * @see StandardGeoInfo
+         */
+        public List<StandardGeoInfo> getStandardList() {
+            return list(standardList);
         }
 
         /**
