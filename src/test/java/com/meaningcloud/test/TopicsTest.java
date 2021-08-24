@@ -208,7 +208,7 @@ public class TopicsTest extends TestSuper {
     public void testTopicsRequestLanguageAuto() throws IOException, Request.ParameterValidationException {
         TopicsResponse r = TopicsRequest
                 .build(MEANINGCLOUD_KEY, Request.Language.AUTO)
-                .withText("Londres")
+                .withText("Londres es una ciudad muy bonita")
                 .withInterfaceLanguage(Request.Language.ES)
                 .send();
 
