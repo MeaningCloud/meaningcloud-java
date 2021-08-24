@@ -28,13 +28,15 @@ jobs:
           path: tmp/html/*
       - name: 'Clone Test Dashboard'
         run: mkdir test-dashboard && git clone https://github.com/MeaningCloud/test-dashboard.git
-      - name: 'Add report, commit and push it to test dashboard'
+      - name: 'Compute complete URL'
         run: |
           REPORT_TIME=$(date +"report-%H:%M-%d-%m-%Y")
           REPLACE="%3A"
           URL=${REPORT_TIME//:/$REPLACE}
           COMPLETE_URL=https://meaningcloud.github.io/test-dashboard/reports/$URL/index.html
-          echo "::set-env name=COMPLETE_URL::$COMPLETE_URL"
+          echo "COMPLETE_URL=$COMPLETE_URL" >> $GITHUB_ENV
+      - name: 'Add report, commit and push it to test dashboard'
+        run: |
           echo $COMPLETE_URL
           mv tmp/html test-dashboard/reports/$REPORT_TIME
           cd test-dashboard
