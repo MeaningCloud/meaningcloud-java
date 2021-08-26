@@ -35,6 +35,7 @@ jobs:
           URL=${REPORT_TIME//:/$REPLACE}
           COMPLETE_URL=https://meaningcloud.github.io/test-dashboard/reports/$URL/index.html
           echo "COMPLETE_URL=$COMPLETE_URL" >> $GITHUB_ENV
+          echo "REPORT_TIME=$REPORT_TIME" >> $GITHUB_ENV
       - name: 'Add report, commit and push it to test dashboard'
         run: |
           echo $COMPLETE_URL
