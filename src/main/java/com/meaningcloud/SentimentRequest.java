@@ -383,6 +383,16 @@ public class SentimentRequest extends Request {
     }
 
     /**
+     * Builds a sentiment request with the Disambiguation context
+     * @param cont Disambiguation context
+     * @return A sentiment request object
+     * @throws ParameterValidationException Raised when a parameter value can't be accepted
+     */
+    public SentimentRequest withCont(String cont) throws ParameterValidationException {
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, payload, dictionaries);
+    }
+
+    /**
      * Builds a sentiment request with the verbose
      * @param verbose it shows additional information about the sentiment analysis specifically
      * @return A sentiment request object
