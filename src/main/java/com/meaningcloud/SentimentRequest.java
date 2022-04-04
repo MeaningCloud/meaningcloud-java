@@ -24,6 +24,7 @@ public class SentimentRequest extends Request {
     public static final DisambiguationLevel DEFAULT_DM = DisambiguationLevel.SEMANTIC;
     public static final SemanticDisambiguationGrouping DEFAULT_SDG = SemanticDisambiguationGrouping.BY_TYPE_SMALLEST_LOCATION;
     public static final String DEFAULT_UD = "";
+    public static final String DEFAULT_CONT = "";
     public static final boolean DEFAULT_VERBOSE = false;
     public static final Payload DEFAULT_PAYLOAD = new NoPayload();
     public static final String[] DEFAULT_DICTIONARIES = new String[0];
@@ -147,6 +148,7 @@ public class SentimentRequest extends Request {
     public final DisambiguationLevel dm;
     public final SemanticDisambiguationGrouping sdg;
     public final String ud;
+    public final String cont;
     public final boolean verbose;
     public final Payload payload;
     public final String[] dictionaries;
@@ -169,6 +171,7 @@ public class SentimentRequest extends Request {
         params.put("dm", dm.code());
         params.put("sdg", sdg.code());
         params.put("ud", ud);
+        params.put("cont", cont);
         params.put("verbose", verbose ? "y" : "n");
         params.put("ud", String.join("|", dictionaries));
 
@@ -210,6 +213,7 @@ public class SentimentRequest extends Request {
      * @param dm Type of disambiguation applied
      * @param sdg Semantic disambiguation grouping
      * @param ud The user dictionary allows to include user-defined entities and concepts in the sentiment analysis
+     * @param cont Disambiguation context. Context prioritization for entity semantic disambiguation. See context disambiguation for a more in depth explanation.
      * @param verbose it shows additional information about the sentiment analysis specifically
      * @param payload Interface to obtain parameters
      * @throws Request.ParameterValidationException Raised when a parameter value can't be accepted
@@ -225,6 +229,7 @@ public class SentimentRequest extends Request {
                             DisambiguationLevel dm,
                             SemanticDisambiguationGrouping sdg,
                             String ud,
+                            String cont, 
                             boolean verbose,
                             Payload payload,
                             String[] dictionaries) throws Request.ParameterValidationException {
@@ -238,6 +243,7 @@ public class SentimentRequest extends Request {
         this.dm = dm;
         this.sdg = sdg;
         this.ud = ud;
+        this.cont = cont;
         this.verbose = verbose;
         this.payload = payload;
         this.dictionaries = dictionaries;
@@ -251,7 +257,7 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public static SentimentRequest build(String key, Language lang) throws ParameterValidationException {
-        return new SentimentRequest(DEFAULT_TRANSPORT, key, lang, DEFAULT_TXT_F, DEFAULT_MODEL, DEFAULT_EGP, DEFAULT_RT, DEFAULT_UW, DEFAULT_DM, DEFAULT_SDG, DEFAULT_UD, DEFAULT_VERBOSE, DEFAULT_PAYLOAD, DEFAULT_DICTIONARIES);
+        return new SentimentRequest(DEFAULT_TRANSPORT, key, lang, DEFAULT_TXT_F, DEFAULT_MODEL, DEFAULT_EGP, DEFAULT_RT, DEFAULT_UW, DEFAULT_DM, DEFAULT_SDG, DEFAULT_UD, DEFAULT_CONT, DEFAULT_VERBOSE, DEFAULT_PAYLOAD, DEFAULT_DICTIONARIES);
     }
 
     /**
@@ -262,7 +268,7 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public static SentimentRequest build(Transport transport, String key, Language lang) throws ParameterValidationException {
-        return new SentimentRequest(transport, key, lang, DEFAULT_TXT_F, DEFAULT_MODEL, DEFAULT_EGP, DEFAULT_RT, DEFAULT_UW, DEFAULT_DM, DEFAULT_SDG, DEFAULT_UD, DEFAULT_VERBOSE, DEFAULT_PAYLOAD, DEFAULT_DICTIONARIES);
+        return new SentimentRequest(transport, key, lang, DEFAULT_TXT_F, DEFAULT_MODEL, DEFAULT_EGP, DEFAULT_RT, DEFAULT_UW, DEFAULT_DM, DEFAULT_SDG, DEFAULT_UD, DEFAULT_CONT, DEFAULT_VERBOSE, DEFAULT_PAYLOAD, DEFAULT_DICTIONARIES);
     }
 
     /**
@@ -272,7 +278,7 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public SentimentRequest withText(String txt) throws ParameterValidationException {
-        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, verbose, new SentimentRequest.TextPayload(txt), dictionaries);
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, new SentimentRequest.TextPayload(txt), dictionaries);
     }
 
     /**
@@ -283,7 +289,7 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public SentimentRequest withFile(File file) throws IOException, ParameterValidationException {
-        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, verbose, new SentimentRequest.FilePayload(file), dictionaries);
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, new SentimentRequest.FilePayload(file), dictionaries);
     }
 
     /**
@@ -293,7 +299,7 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public SentimentRequest withURL(URL url) throws ParameterValidationException {
-        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, verbose, new SentimentRequest.URLPayload(url.toString()), dictionaries);
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, new SentimentRequest.URLPayload(url.toString()), dictionaries);
     }
 
     /**
@@ -303,7 +309,7 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public SentimentRequest withTxtf(TextFormat txtf) throws ParameterValidationException {
-        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, verbose, payload, dictionaries);
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, payload, dictionaries);
     }
 
     /**
@@ -313,7 +319,7 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public SentimentRequest withModel(String model) throws ParameterValidationException {
-        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, verbose, payload, dictionaries);
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, payload, dictionaries);
     }
 
     /**
@@ -323,7 +329,7 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public SentimentRequest withPolarity(boolean egp) throws ParameterValidationException {
-        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, verbose, payload, dictionaries);
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, payload, dictionaries);
     }
 
     /**
@@ -333,7 +339,7 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public SentimentRequest withRT(RelaxedTypography rt) throws ParameterValidationException {
-        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, verbose, payload, dictionaries);
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, payload, dictionaries);
     }
 
     /**
@@ -343,7 +349,7 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public SentimentRequest withUW(boolean uw) throws ParameterValidationException {
-        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, verbose, payload, dictionaries);
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, payload, dictionaries);
     }
 
     /**
@@ -353,7 +359,7 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public SentimentRequest withDM(DisambiguationLevel dm) throws ParameterValidationException {
-        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, verbose, payload, dictionaries);
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, payload, dictionaries);
     }
 
     /**
@@ -363,7 +369,7 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public SentimentRequest withSDG(SemanticDisambiguationGrouping sdg) throws ParameterValidationException {
-        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, verbose, payload, dictionaries);
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, payload, dictionaries);
     }
 
     /**
@@ -373,7 +379,17 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException Raised when a parameter value can't be accepted
      */
     public SentimentRequest withUD(String ud) throws ParameterValidationException {
-        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, verbose, payload, dictionaries);
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, payload, dictionaries);
+    }
+
+    /**
+     * Builds a sentiment request with the Disambiguation context
+     * @param cont Disambiguation context
+     * @return A sentiment request object
+     * @throws ParameterValidationException Raised when a parameter value can't be accepted
+     */
+    public SentimentRequest withCont(String cont) throws ParameterValidationException {
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, payload, dictionaries);
     }
 
     /**
@@ -383,7 +399,7 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException it shows additional information about the sentiment analysis specifically
      */
     public SentimentRequest withVerbose(boolean verbose) throws ParameterValidationException {
-        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, verbose, payload, dictionaries);
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, payload, dictionaries);
     }
 
     /**
@@ -393,6 +409,6 @@ public class SentimentRequest extends Request {
      * @throws ParameterValidationException it shows additional information about the sentiment analysis specifically
      */
     public SentimentRequest withDictionaries(String ... dict) throws ParameterValidationException {
-        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, verbose, payload, dict);
+        return new SentimentRequest(transport, key, lang, txtf, model, egp, rt, uw, dm, sdg, ud, cont, verbose, payload, dict);
     }
 }
