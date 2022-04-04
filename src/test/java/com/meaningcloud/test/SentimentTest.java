@@ -375,11 +375,11 @@ public class SentimentTest extends TestSuper {
                 .send();
 
         assertEquals("OK", r.status.msg);
-        assertEquals("Toledo", r.getSentenceList().get(0).getSegmentList().get(0).getPolarityTermList().get(0).getSentimentedEntityList().get(0).getForm());
-        assertEquals("71a122d565", r.getSentenceList().get(0).getSegmentList().get(0).getPolarityTermList().get(0).getSentimentedEntityList().get(0).getId());
+        assertEquals("Toledo", r.getSentimentedEntityList().get(0).getForm());
+        assertEquals("71a122d565", r.getSentimentedEntityList().get(0).getId());
 
-        assertEquals("Toledo", r.getSentenceList().get(0).getSegmentList().get(0).getPolarityTermList().get(0).getSentimentedEntityList().get(1).getForm());
-        assertEquals("ad9dbcd800", r.getSentenceList().get(0).getSegmentList().get(0).getPolarityTermList().get(0).getSentimentedEntityList().get(1).getId());
+        assertEquals("Toledo", r.getSentimentedEntityList().get(1).getForm());
+        assertEquals("ad9dbcd800", r.getSentimentedEntityList().get(1).getId());
 
     }
 }
