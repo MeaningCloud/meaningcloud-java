@@ -364,4 +364,22 @@ public class SentimentTest extends TestSuper {
                 .withDictionaries("a", "b")
                 .send();
     }
+
+    @Test
+    public void testSentimentRequestWithContext() throws IOException, Request.ParameterValidationException {
+        SentimentResponse r = SentimentRequest
+                .build(MEANINGCLOUD_KEY, Request.Language.EN)
+                .withText("He always wanted to live in Toledo")
+                .withModel("general")
+                .withCont("33fc13e6dd")
+                .send();
+
+        assertEquals("OK", r.status.msg);
+        assertEquals("Toledo", r.getSentenceList().get(0).getSegmentList().get(0).getPolarityTermList().get(0).getSentimentedEntityList().get(0).getForm());
+        assertEquals("71a122d565", r.getSentenceList().get(0).getSegmentList().get(0).getPolarityTermList().get(0).getSentimentedEntityList().get(0).getId());
+
+        assertEquals("Toledo", r.getSentenceList().get(0).getSegmentList().get(0).getPolarityTermList().get(0).getSentimentedEntityList().get(1).getForm());
+        assertEquals("ad9dbcd800", r.getSentenceList().get(0).getSegmentList().get(0).getPolarityTermList().get(0).getSentimentedEntityList().get(1).getId());
+
+    }
 }
