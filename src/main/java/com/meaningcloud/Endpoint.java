@@ -68,7 +68,7 @@ public class Endpoint {
      * This constructor is intended to query on-premises installations
      * or premium services
      * @param server An address like <tt>http://localhost</tt>
-     * @param serviceName A name like <tt>class-1.1</tt>
+     * @param serviceName A name like <tt>class-2.0</tt>
      * @see Service
      */
     private Endpoint(String server, String serviceName) {

@@ -5,18 +5,18 @@ services easily from your own applications.
 
 ## SDK versions
 
-Starting from version 2.0 the classification API `class-1.1` is deprecated. Please refer to the
+With version 0.9 retired the classification API `class-1.1` is no longer available. Please refer to the
 [class-1.1 to class-2.0 Model Migration Guide](https://www.meaningcloud.com/blog/text-classification-20-migration-guide)
 to upgrade your classification models.
 
-|                     | v0.9                   | v2.0                   |
-|---------------------|------------------------|------------------------|
-| Class               | class-1.1              | **class-2.0**          |
-| Deep Categorization | deepcategorization-1.0 | deepcategorization-1.0 |
-| Language Detection  | lang-2.0               | lang-2.0               |
-| Parser              | parser-2.0             | parser-2.0             |
-| Sentiment Analysis  | sentiment-2.1          | sentiment-2.1          |
-| Topics Extraction   | topics-2.0             | topics-2.0             |
+|                     | v2.0                   |
+|---------------------|------------------------|
+| Class               | class-2.0              |
+| Deep Categorization | deepcategorization-1.0 |
+| Language Detection  | lang-2.0               |
+| Parser              | parser-2.0             |
+| Sentiment Analysis  | sentiment-2.1          |
+| Topics Extraction   | topics-2.0             |
 
 
 ## Getting started
